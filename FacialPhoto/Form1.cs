@@ -356,7 +356,41 @@ namespace FacialPhoto
 
         private void btnLeftcalculate_Click(object sender, EventArgs e)
         {
-            
+            double p2X = 0.0, p2Y=0.0, p1X=0.0, p1Y=0.0, p3X=0.0, p3Y=0.0;
+
+            foreach (Circle item in circleArray)
+            {
+
+                if (item != null)
+                {
+                    if (String.Equals(item._text, "Go'"))
+                    {
+                        p2X = item._location.X;
+                        p2Y = item._location.Y;
+                    }
+
+                    else if (item._text == "Tr")
+                    {
+                        p1X = item._location.X;
+                        p1Y = item._location.Y;
+                    }
+                    else if (item._text == "Gn'")
+                    {
+                        p3X = item._location.X;
+                        p3Y = item._location.Y;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+                }
+
+
+            }
+
+            double answer = calculateAngle(p1X,p1Y,p2X,p2Y,p3X,p3Y);
+           lblLeftAngle.Text = "Angle:" + answer;
         }
 
         private void Form1_MouseEnter(object sender, EventArgs e)
