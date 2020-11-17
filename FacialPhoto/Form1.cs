@@ -17,7 +17,8 @@ namespace FacialPhoto
         {
             InitializeComponent();
         }
-        Bitmap leftimageLoad;
+        Bitmap leftimageLoad; //left pic box loaded image for later undo the crop changes made
+        Bitmap rightimageLoad;//right pic box loaded image for later to undo the crop changes made
 
         private void btnBrowseLeft_Click(object sender, EventArgs e)
         {
@@ -52,16 +53,38 @@ namespace FacialPhoto
 
             }
         }
-        int xDown, yDown, rectW, rectH; //mouse clicked down positions for cropping and width and height of the crop
-        bool startSelection = false;
-        public Pen crpPen = new Pen(Color.White);
-        bool drawing = false, drawingLine = false, ending = false;
+
+        int xDown, yDown, rectW, rectH; //left pic box mouse clicked down positions for cropping and width and height of the crop
+        int xRDown, yRDown, rectRW, rectRH; //right picbox mouse click
+
+        bool startSelection = false; //left pic box selection started
+        bool startSelectionRight = false; //right picBox selection started
+
+        public Pen crpPen = new Pen(Color.White); //using the same pen for both pic boxes
+
+        bool drawing = false, drawingLine = false, ending = false; //left picbox drawing line
+        bool drawingR = false, drawingLineR = false, endingR = false; //right picbox drawing line
+
+        Circle[] circleArray = new Circle[35]; //left picbox drawn circles array
+        Point[] locationArray = new Point[35];
 
 
-        Circle[] circleArray = new Circle[10];
-        Point[] locationArray = new Point[10];
-     
-        Line line;
+        Circle[] circleArrayR = new Circle[35]; //right picbox drawn circles array
+        Point[] locationArrayR = new Point[35];
+
+        Line line; //left picbox drawn line
+        Line lineR;//right pic box drawn line
+
+        //list of the names of the points
+        
+        List<String> names = new List<string>()
+
+        {
+            "V'","Tr'","Eu'","G'","Op'","Ft","Na'","Ps","Ex","En","Pi","Or'","Rh'","Zy'","Tr","Prn",
+            "C'","Al","Ac","Sn","Spl","Ls","Sts","St","Ch","Sti","Li","Sbl","Pog'","Gn'","Me'","Go'","C"
+
+
+        };
 
         private void picBoxLeft_MouseUp(object sender, MouseEventArgs e)
         {
@@ -78,10 +101,200 @@ namespace FacialPhoto
             }
         }
         }
+        
+        private void picBoxRight_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (endingR) endingR = false;
+            if (drawingLineR)
+            {
 
-        private void picBoxLeft_MouseEnter(object sender, EventArgs e)
+                lineR._endLoc = e.Location;
+                lineR.drawMe();
+
+
+               btnRightDraw.BackColor = Color.LightGray;
+                String content = Interaction.InputBox("Enter Your Value from cm", "Distance Between", "10", 500, 500);
+
+                lineR._text = content;
+                lineR.drawText();
+
+                drawingLineR = false;
+                drawingR = false;
+                endingR = true;
+
+            }
+            if ((e.Button == MouseButtons.Left) && drawingR)
+            {
+
+                //lineStart = e.Location;
+                lineR = new Line(picBoxRight);
+                lineR._startLoc = e.Location;
+                drawingLineR = true;
+
+            }
+            if (!endingR && !startSelectionRight)
+            {
+                foreach (Circle item in circleArrayR)
+                {
+
+                    if (item != null && insideCircle(item._location, e.Location, item._radius))
+                    {
+                        item._selected = true;
+                    }
+
+
+
+                }
+
+            }
+            if ((e.Button == MouseButtons.Left) && startSelectionRight)
+            {
+
+                crpPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+                xRDown = e.X;
+                yRDown = e.Y;
+            }
+        }
+
+        private void picBoxRight_MouseMove(object sender, MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (drawingLineR)
+            {
+
+
+                Refresh();
+                lineR._endLoc = e.Location;
+                lineR.drawMe();
+
+            }
+
+            foreach (Circle item in circleArrayR)
+            {
+                if (item != null && item._selected)
+                {
+                    Refresh();
+
+                    item._location = new Point(e.X, e.Y);
+
+
+                }
+
+                if (item != null) item.drawMe();
+                if (lineR != null)
+                {
+                    lineR.drawMe();
+                    if (lineR._text != null) lineR.drawText();
+                }
+            }
+
+            if ((e.Button == MouseButtons.Left) && startSelectionRight)
+            {
+
+                picBoxRight.Refresh();
+                //set width and height of the rectangle to crop
+
+                rectRW = e.X - xRDown;
+                rectRH = e.Y - yRDown;
+
+                Graphics g = picBoxRight.CreateGraphics();
+                g.DrawRectangle(crpPen, xRDown, yRDown, rectRW, rectRH);
+                g.Dispose();
+
+            }
+        }
+
+        private void picBoxRight_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (!endingR && !startSelectionRight)
+            {
+                foreach (Circle item in circleArrayR)
+                {
+                    if (item != null)
+                    {
+                        item._selected = false;
+                        item.drawMe();
+                    }
+
+                }
+            }
+
+        }
+
+        private void btnCropRight_Click(object sender, EventArgs e)
+        {
+            startSelectionRight = false;//make the flag false selection is over
+
+
+            Bitmap bmp2 = new Bitmap(picBoxRight.Width, picBoxRight.Height);
+            picBoxRight.DrawToBitmap(bmp2, picBoxRight.ClientRectangle);
+            Bitmap crpImg = new Bitmap(rectRW, rectRH);
+
+
+            for (int i = 0; i < rectRW; i++)
+            {
+                for (int y = 0; y < rectRH; y++)
+                {
+                    Color pxlclr = bmp2.GetPixel(xRDown + i, yRDown + y);
+                    crpImg.SetPixel(i, y, pxlclr);
+                }
+            }
+
+
+
+            picBoxRight.Image = (Image)crpImg;
+            picBoxRight.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            picBoxRight.Refresh();//remove the selection rectangle
+        }
+
+        private void btnRightReset_Click(object sender, EventArgs e)
+        {
+            picBoxRight.Image = rightimageLoad;
+        }
+
+        private void btnRightLoad_Click(object sender, EventArgs e)
+        {
+            int countX = 0;
+            int countY = 50;
+
+
+
+            for (int i = 0; i < names.Count; i++)
+            {
+
+
+                countX += 50;
+                if (countX > picBoxLeft.Width - 50) { countX = 10; countY += 100; }
+
+                circleArrayR[i] = new Circle(new Point(countX, countY), picBoxRight, Color.Red, 25, i, names[i]);
+
+            }
+
+            foreach (Circle item in circleArrayR)
+            {
+                if (item != null) item.drawMe();
+
+
+            }
+        }
+
+        private void btnRightDraw_Click(object sender, EventArgs e)
         {
 
+            if (drawingR)
+            {
+                btnRightDraw.BackColor = Color.LightGray;
+                drawingR = false;
+                drawingLineR = false;
+            }
+            else
+            {
+                drawingR = true;
+                btnRightDraw.BackColor = Color.Green;
+
+            }
         }
 
         private void picBoxLeft_MouseDown(object sender, MouseEventArgs e)
@@ -141,6 +354,11 @@ namespace FacialPhoto
 
         }
 
+        private void btnLeftcalculate_Click(object sender, EventArgs e)
+        {
+            if()
+        }
+
         private void Form1_MouseEnter(object sender, EventArgs e)
         {
 
@@ -198,6 +416,12 @@ namespace FacialPhoto
             startSelection = true;
         }
 
+        private void btnCropInitRight_Click(object sender, EventArgs e)
+        {
+            startSelectionRight = true;
+
+        }
+
         private void btnCropLeft_Click(object sender, EventArgs e)
         {
             startSelection = false;//make the flag false selection is over
@@ -219,8 +443,8 @@ namespace FacialPhoto
 
 
 
-            picBoxRight.Image = (Image)crpImg;
-            picBoxRight.SizeMode = PictureBoxSizeMode.StretchImage;
+            picBoxLeft.Image = (Image)crpImg;
+            picBoxLeft.SizeMode = PictureBoxSizeMode.StretchImage;
 
             picBoxLeft.Refresh();//remove the selection rectangle
         }
@@ -229,9 +453,7 @@ namespace FacialPhoto
         {
             picBoxLeft.Image = leftimageLoad;
         }
-
         
-
         private void btnDraw_Click(object sender, EventArgs e)
         {
 
@@ -255,8 +477,21 @@ namespace FacialPhoto
         private void btnLoadPoints_Click(object sender, EventArgs e)
         {
 
-            circleArray[0] = new Circle(new Point(100, 100), picBoxLeft, Color.Red, 50, 1, "A");
-            circleArray[1] = new Circle(new Point(150 + 100, 100 + 100), picBoxLeft, Color.Green, 50, 2, "B");
+            int countX = 0;
+            int countY = 50;
+
+         
+
+            for (int i = 0; i < names.Count; i++)
+            {
+
+               
+                    countX +=50;
+                    if (countX > picBoxLeft.Width-50) { countX = 10; countY += 100; }
+                  
+                    circleArray[i] = new Circle(new Point(countX, countY), picBoxLeft, Color.Red, 25, i, names[i]);
+               
+            }
 
             foreach (Circle item in circleArray)
             {
@@ -277,7 +512,25 @@ namespace FacialPhoto
 
         }
 
-       
+        double calculateAngle(double P1X, double P1Y, double P2X, double P2Y,
+            double P3X, double P3Y)
+        {
+
+            double numerator = P2Y * (P1X - P3X) + P1Y * (P3X - P2X) + P3Y * (P2X - P1X);
+            double denominator = (P2X - P1X) * (P1X - P3X) + (P2Y - P1Y) * (P1Y - P3Y);
+            double ratio = numerator / denominator;
+
+            double angleRad = Math.Atan(ratio);
+            double angleDeg = (angleRad * 180) / Math.PI;
+
+            if (angleDeg < 0)
+            {
+                angleDeg = 180 + angleDeg;
+            }
+
+            return angleDeg;
+        }
+
 
     }
 }
