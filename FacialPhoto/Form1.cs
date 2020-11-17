@@ -356,7 +356,7 @@ namespace FacialPhoto
 
         private void btnLeftcalculate_Click(object sender, EventArgs e)
         {
-            if()
+            
         }
 
         private void Form1_MouseEnter(object sender, EventArgs e)
