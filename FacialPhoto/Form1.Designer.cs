@@ -325,6 +325,7 @@
             this.btnRightCalculate.TabIndex = 8;
             this.btnRightCalculate.Text = "Calculate Angle";
             this.btnRightCalculate.UseVisualStyleBackColor = true;
+            this.btnRightCalculate.Click += new System.EventHandler(this.btnRightCalculate_Click);
             // 
             // Form1
             // 

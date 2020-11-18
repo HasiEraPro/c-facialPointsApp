@@ -363,13 +363,13 @@ namespace FacialPhoto
 
                 if (item != null)
                 {
-                    if (String.Equals(item._text, "Go'"))
+                    if (String.Equals(item._text, "Tr"))
                     {
                         p2X = item._location.X;
                         p2Y = item._location.Y;
                     }
 
-                    else if (item._text == "Tr")
+                    else if (item._text == "Go'")
                     {
                         p1X = item._location.X;
                         p1Y = item._location.Y;
@@ -379,10 +379,7 @@ namespace FacialPhoto
                         p3X = item._location.X;
                         p3Y = item._location.Y;
                     }
-                    else
-                    {
-                        continue;
-                    }
+                   
 
                 }
 
@@ -390,7 +387,47 @@ namespace FacialPhoto
             }
 
             double answer = calculateAngle(p1X,p1Y,p2X,p2Y,p3X,p3Y);
-           lblLeftAngle.Text = "Angle:" + answer;
+            answer = Math.Round(answer, 2, MidpointRounding.ToEven);
+
+            lblLeftAngle.Text = "Angle:" + answer+ "\u00B0";
+        }
+
+        private void btnRightCalculate_Click(object sender, EventArgs e)
+        {
+            double p2X = 0.0, p2Y = 0.0, p1X = 0.0, p1Y = 0.0, p3X = 0.0, p3Y = 0.0;
+
+            foreach (Circle item in circleArrayR)
+            {
+
+                if (item != null)
+                {
+                    if (String.Equals(item._text, "Tr"))
+                    {
+                        p2X = item._location.X;
+                        p2Y = item._location.Y;
+                    }
+
+                    else if (item._text == "Go'")
+                    {
+                        p1X = item._location.X;
+                        p1Y = item._location.Y;
+                    }
+                    else if (item._text == "Gn'")
+                    {
+                        p3X = item._location.X;
+                        p3Y = item._location.Y;
+                    }
+
+
+                }
+
+
+            }
+
+            double answer = calculateAngle(p1X, p1Y, p2X, p2Y, p3X, p3Y);
+            answer = Math.Round(answer, 2, MidpointRounding.ToEven);
+
+            lblRightAngle.Text = "Angle:" + answer + "\u00B0";
         }
 
         private void Form1_MouseEnter(object sender, EventArgs e)
