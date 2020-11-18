@@ -8,18 +8,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using iText.Kernel.Pdf;
 using iText.Layout;
 using DrawingImage = System.Drawing.Image;
 
-using Pdfimage = iText.Layout.Element.Image;
+using PdfImage = iText.Layout.Element.Image;
 using iText.Layout.Properties;
 using iText.Layout.Element;
+using System.IO;
+using iText.Kernel.Geom;
+
+using PdfPoint = iText.Kernel.Geom.Point;
+using Point = System.Drawing.Point;
+using iText.Kernel.Pdf.Canvas.Draw;
 
 namespace FacialPhoto
 {
     public partial class Form1 : Form
     {
+        public  static string answerAssym = "";
+        public  static string answerSupport = "";
+        
         public Form1()
         {
             InitializeComponent();
@@ -440,15 +450,225 @@ namespace FacialPhoto
 
         private void btnLeftPrint_Click(object sender, EventArgs e)
         {
-            PdfWriter writer = new PdfWriter("D:\\demo.pdf");
-            PdfDocument pdf = new PdfDocument(writer);
-            Document document = new Document(pdf);
-            Paragraph header = new Paragraph("HEADER")
+            msg f2 = new msg();
+            f2.ShowDialog();//this way the form1 will hold untill the form 2(msg form ) is closed
+
+            string savePdfFilePath = "";
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.InitialDirectory = @"C:\";
+            sf.Title = "Save Pdf in";
+           sf.Filter = "Pdf files (*.pdf)|*.pdf|All files (*.*)|*.*";
+            if (sf.ShowDialog() == DialogResult.OK)
+            {
+                savePdfFilePath = System.IO.Path.GetFullPath(sf.FileName);
+            }
+                PdfWriter writer = new PdfWriter(savePdfFilePath);
+                PdfDocument pdf = new PdfDocument(writer);
+
+                float a4Width = PageSize.A4.GetWidth();
+                float a4Height = PageSize.A4.GetHeight();
+                PageSize pagesize = new PageSize(a4Width, a4Height);
+                pdf.SetDefaultPageSize(pagesize);
+
+
+                Document document = new Document(pdf);
+
+
+
+                Pen p = new Pen(Color.Red);
+                SolidBrush b = new SolidBrush(Color.Red);
+                //Bitmap bmap = new Bitmap(picBoxLeft.Width, picBoxLeft.Height);
+
+                Bitmap bmap = new Bitmap(picBoxLeft.Image, picBoxLeft.Width, picBoxLeft.Height);
+                Bitmap bmapRight = new Bitmap(picBoxRight.Image, picBoxRight.Width, picBoxRight.Height);
+
+
+                bmap.MakeTransparent();
+                bmapRight.MakeTransparent();
+
+                Graphics g = Graphics.FromImage(bmap);
+                Graphics gr = Graphics.FromImage(bmapRight);
+
+                foreach (Circle item in circleArray)
+                {
+                    if (item != null)
+                    {
+
+                        g.FillEllipse(b, item._location.X, item._location.Y, item._radius, item._radius);
+                        g.DrawString(item._text, new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold), b, new Point(item._location.X, item._location.Y + item._radius - 70));
+                        //g.Dispose();
+
+                    }
+
+                }
+                foreach (Circle item in circleArrayR)
+                {
+                    if (item != null)
+                    {
+
+                        gr.FillEllipse(b, item._location.X, item._location.Y, item._radius, item._radius);
+                        gr.DrawString(item._text, new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold), b, new Point(item._location.X, item._location.Y + item._radius - 70));
+                        //g.Dispose();
+
+                    }
+
+                }
+
+                Pen linePen = new Pen(Color.Blue);
+                if (line != null)
+                {
+                    linePen.Width = (line == null) ? 10 : line._width;
+                    g.DrawLine(linePen, line._startLoc, line._endLoc);
+                    gr.DrawLine(linePen, lineR._startLoc, lineR._endLoc);
+                    Point mid = line.midpoint(line._startLoc, line._endLoc);
+                    Point midR = line.midpoint(lineR._startLoc, lineR._endLoc);
+                    g.DrawString(line._text + "cm",
+                       new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold),
+                      new SolidBrush(Color.Red),
+                       new Point(mid.X, mid.Y - 10));
+
+                    gr.DrawString(lineR._text + "cm",
+                          new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold),
+                         new SolidBrush(Color.Red),
+                          new Point(midR.X, midR.Y - 10));
+                }
+
+
+
+
+
+
+
+
+
+
+                MemoryStream ms = new MemoryStream();
+                MemoryStream msR = new MemoryStream();
+                bmap.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                bmapRight.Save(msR, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                byte[] buff = ms.GetBuffer();
+                byte[] buffR = msR.GetBuffer();
+
+            Paragraph header = new Paragraph("Created From Facial Mark App")
                .SetTextAlignment(TextAlignment.CENTER)
-               .SetFontSize(20);
+               .SetFontSize(20).SetMarginBottom(5);
+
+
+
+                PdfImage img = new PdfImage(iText.IO.Image.ImageDataFactory
+                                        .Create(buff)).SetTextAlignment(TextAlignment.LEFT);
+                PdfImage imgR = new PdfImage(iText.IO.Image.ImageDataFactory
+                                        .Create(buffR)).SetTextAlignment(TextAlignment.RIGHT);
+
+                Table table = new Table(1).SetTextAlignment(TextAlignment.CENTER);
+                Paragraph p1 = new Paragraph();
+                img.Scale(0.3f, 0.3f);
+                imgR.Scale(0.3f, 0.3f);
+                p1.Add(img);
+                p1.Add(imgR);
+
+                table.AddCell(p1);
+
+            // Line separator
+            LineSeparator ls = new LineSeparator(new SolidLine()).SetMarginBottom(10); ;
+            Paragraph subheader = new Paragraph("Answers")
+                .SetTextAlignment(TextAlignment.LEFT)
+                .SetFontSize(15).SetMarginBottom(20);
+
+          
+
+            Paragraph answerAssym = new Paragraph("Degree of asymmetry:-"+Form1.answerAssym)
+               .SetTextAlignment(TextAlignment.LEFT)
+               .SetFontSize(10);
+
+            Paragraph answerSupport = new Paragraph("Degree of undereye support :-" + Form1.answerSupport)
+               .SetTextAlignment(TextAlignment.LEFT)
+               .SetFontSize(10);
+            string distnaceLeft="NULL";
+            string distanceRight = "NULL";
+
+            if (line != null)
+            {
+
+                distnaceLeft = line._text;
+            }
+            if (lineR != null)
+            {
+
+                distanceRight = lineR._text;
+
+            }
+            Paragraph distancePara = new Paragraph("Distance(Side)" + distnaceLeft+"cm"+ "Distance(Frontal)" + distanceRight + "cm")
+              .SetTextAlignment(TextAlignment.LEFT)
+              .SetFontSize(10);
+
+            Paragraph anglePara = new Paragraph("The angle created by the line from “Tr to Go” and “Go to Gn’”")
+               .SetTextAlignment(TextAlignment.LEFT)
+               .SetFontSize(12).SetBold().SetMarginBottom(15);
+
+            Paragraph angleParaLeft = new Paragraph("Angle(Side):")
+               .SetTextAlignment(TextAlignment.LEFT)
+               .SetFontSize(10).SetMarginBottom(10);
+
+            Paragraph angleParaRight = new Paragraph("Angle(Front):")
+               .SetTextAlignment(TextAlignment.LEFT)
+               .SetFontSize(10).SetMarginBottom(10);
 
             document.Add(header);
+            document.Add(ls);
+            document.Add(table);
+            document.Add(subheader);
+            document.Add(answerAssym);
+            document.Add(answerSupport);
+            document.Add(distancePara);
+            document.Add(anglePara);
+            document.Add(angleParaLeft);
+            document.Add(angleParaRight);
+            //document.Add(img);
+            //document.Add(imgR);
             document.Close();
+
+            
+            
+        }
+
+        private void btnRightCalculate_Click_1(object sender, EventArgs e)
+        {
+            double p2X = 0.0, p2Y = 0.0, p1X = 0.0, p1Y = 0.0, p3X = 0.0, p3Y = 0.0;
+
+            foreach (Circle item in circleArrayR)
+            {
+
+                if (item != null)
+                {
+                    if (String.Equals(item._text, "Tr"))
+                    {
+                        p2X = item._location.X;
+                        p2Y = item._location.Y;
+                    }
+
+                    else if (item._text == "Go'")
+                    {
+                        p1X = item._location.X;
+                        p1Y = item._location.Y;
+                    }
+                    else if (item._text == "Gn'")
+                    {
+                        p3X = item._location.X;
+                        p3Y = item._location.Y;
+                    }
+
+
+                }
+
+
+            }
+
+            double answer = calculateAngle(p1X, p1Y, p2X, p2Y, p3X, p3Y);
+            answer = Math.Round(answer, 2, MidpointRounding.ToEven);
+
+            lblRightAngle.Text = "Angle:" + answer + "\u00B0";
         }
 
         private void Form1_MouseEnter(object sender, EventArgs e)
@@ -625,6 +845,8 @@ namespace FacialPhoto
         }
 
 
+
+
     }
 }
 
@@ -661,7 +883,10 @@ class Circle : UserControl
         g.DrawString(this._text, new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold), b, new Point(this._location.X, this._location.Y + this._radius - 70));
         g.Dispose();
 
+
     }
+
+  
 
 
 }
@@ -696,7 +921,7 @@ class Line
     }
 
 
-    private Point midpoint(Point pt1, Point pt2)
+    public Point midpoint(Point pt1, Point pt2)
 
     {
         return (new Point((pt1.X + pt2.X) / 2, (pt1.Y + pt2.Y) / 2));
