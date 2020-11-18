@@ -197,6 +197,7 @@
             this.btnLeftPrint.TabIndex = 6;
             this.btnLeftPrint.Text = "Process";
             this.btnLeftPrint.UseVisualStyleBackColor = true;
+            this.btnLeftPrint.Click += new System.EventHandler(this.btnLeftPrint_Click);
             // 
             // lblLeftAngle
             // 
