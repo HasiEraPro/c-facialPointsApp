@@ -4,18 +4,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using DrawingImage = System.Drawing.Image;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using iText.Kernel.Pdf;
-using iText.Layout;
-using iText.Layout.Element;
-using PdfImage = iText.Layout.Element.Image;
-using iText.Layout.Properties;
-using System.IO;
 
 namespace FacialPhoto
 {
@@ -28,9 +20,6 @@ namespace FacialPhoto
         Bitmap leftimageLoad; //left pic box loaded image for later undo the crop changes made
         Bitmap rightimageLoad;//right pic box loaded image for later to undo the crop changes made
 
-        Graphics leftGraphic;
-        Graphics rightGraphic;
-
         private void btnBrowseLeft_Click(object sender, EventArgs e)
         {
             //open file dialog box object
@@ -42,7 +31,6 @@ namespace FacialPhoto
             {
                 //display image on the picture box left
                 leftimageLoad = new Bitmap(open.FileName);
-               // leftGraphic = Graphics.FromImage(leftimageLoad);
                 picBoxLeft.Image = leftimageLoad;
 
             }
@@ -88,7 +76,7 @@ namespace FacialPhoto
         Line lineR;//right pic box drawn line
 
         //list of the names of the points
-        
+
         List<String> names = new List<string>()
 
         {
@@ -101,19 +89,20 @@ namespace FacialPhoto
         private void picBoxLeft_MouseUp(object sender, MouseEventArgs e)
         {
 
-            if (!ending && !startSelection) { 
-            foreach (Circle item in circleArray)
+            if (!ending && !startSelection)
             {
-                if (item != null)
+                foreach (Circle item in circleArray)
                 {
-                    item._selected = false;
-                    item.drawMe();
-                }
+                    if (item != null)
+                    {
+                        item._selected = false;
+                        item.drawMe();
+                    }
 
+                }
             }
         }
-        }
-        
+
         private void picBoxRight_MouseDown(object sender, MouseEventArgs e)
         {
             if (endingR) endingR = false;
@@ -124,7 +113,7 @@ namespace FacialPhoto
                 lineR.drawMe();
 
 
-               btnRightDraw.BackColor = Color.LightGray;
+                btnRightDraw.BackColor = Color.LightGray;
                 String content = Interaction.InputBox("Enter Your Value from cm", "Distance Between", "10", 500, 500);
 
                 lineR._text = content;
@@ -255,7 +244,7 @@ namespace FacialPhoto
 
 
 
-            picBoxRight.Image = (DrawingImage)crpImg;
+            picBoxRight.Image = (Image)crpImg;
             picBoxRight.SizeMode = PictureBoxSizeMode.StretchImage;
 
             picBoxRight.Refresh();//remove the selection rectangle
@@ -280,7 +269,7 @@ namespace FacialPhoto
                 countX += 50;
                 if (countX > picBoxLeft.Width - 50) { countX = 10; countY += 100; }
 
-                circleArrayR[i] = new Circle(new Point(countX, countY), rightGraphic, Color.Red, 25, i, names[i]);
+                circleArrayR[i] = new Circle(new Point(countX, countY), picBoxRight, Color.Red, 25, i, names[i]);
 
             }
 
@@ -328,7 +317,7 @@ namespace FacialPhoto
                 drawingLine = false;
                 drawing = false;
                 ending = true;
-                
+
             }
             if ((e.Button == MouseButtons.Left) && drawing)
             {
@@ -368,20 +357,20 @@ namespace FacialPhoto
 
         private void btnLeftcalculate_Click(object sender, EventArgs e)
         {
-            double p2X = 0.0, p2Y=0.0, p1X=0.0, p1Y=0.0, p3X=0.0, p3Y=0.0;
+            double p2X = 0.0, p2Y = 0.0, p1X = 0.0, p1Y = 0.0, p3X = 0.0, p3Y = 0.0;
 
             foreach (Circle item in circleArray)
             {
 
                 if (item != null)
                 {
-                    if (String.Equals(item._text, "Go'"))
+                    if (String.Equals(item._text, "Tr"))
                     {
                         p2X = item._location.X;
                         p2Y = item._location.Y;
                     }
 
-                    else if (item._text == "Tr")
+                    else if (item._text == "Go'")
                     {
                         p1X = item._location.X;
                         p1Y = item._location.Y;
@@ -391,30 +380,61 @@ namespace FacialPhoto
                         p3X = item._location.X;
                         p3Y = item._location.Y;
                     }
-                    else
-                    {
-                        continue;
-                    }
+
 
                 }
 
 
             }
 
-            double answer = calculateAngle(p1X,p1Y,p2X,p2Y,p3X,p3Y);
-           lblLeftAngle.Text = "Angle:" + answer;
+            double answer = calculateAngle(p1X, p1Y, p2X, p2Y, p3X, p3Y);
+            answer = Math.Round(answer, 2, MidpointRounding.ToEven);
+
+            lblLeftAngle.Text = "Angle:" + answer + "\u00B0";
+        }
+
+        private void btnRightCalculate_Click(object sender, EventArgs e)
+        {
+            double p2X = 0.0, p2Y = 0.0, p1X = 0.0, p1Y = 0.0, p3X = 0.0, p3Y = 0.0;
+
+            foreach (Circle item in circleArrayR)
+            {
+
+                if (item != null)
+                {
+                    if (String.Equals(item._text, "Tr"))
+                    {
+                        p2X = item._location.X;
+                        p2Y = item._location.Y;
+                    }
+
+                    else if (item._text == "Go'")
+                    {
+                        p1X = item._location.X;
+                        p1Y = item._location.Y;
+                    }
+                    else if (item._text == "Gn'")
+                    {
+                        p3X = item._location.X;
+                        p3Y = item._location.Y;
+                    }
+
+
+                }
+
+
+            }
+
+            double answer = calculateAngle(p1X, p1Y, p2X, p2Y, p3X, p3Y);
+            answer = Math.Round(answer, 2, MidpointRounding.ToEven);
+
+            lblRightAngle.Text = "Angle:" + answer + "\u00B0";
         }
 
         private void Form1_MouseEnter(object sender, EventArgs e)
         {
 
         }
-
-        private void btnLeftPrint_Click(object sender, EventArgs e)
-        {
-            pdfWrite();
-        }
-
         private void picBoxLeft_MouseMove(object sender, MouseEventArgs e)
         {
             base.OnMouseMove(e);
@@ -422,13 +442,13 @@ namespace FacialPhoto
             if (drawingLine)
             {
 
-           
+
                 Refresh();
                 line._endLoc = e.Location;
                 line.drawMe();
 
             }
-            
+
             foreach (Circle item in circleArray)
             {
                 if (item != null && item._selected)
@@ -441,10 +461,11 @@ namespace FacialPhoto
                 }
 
                 if (item != null) item.drawMe();
-                if (line != null) {
+                if (line != null)
+                {
                     line.drawMe();
                     if (line._text != null) line.drawText();
-                } 
+                }
             }
 
             if ((e.Button == MouseButtons.Left) && startSelection)
@@ -495,7 +516,7 @@ namespace FacialPhoto
 
 
 
-            picBoxLeft.Image = (DrawingImage)crpImg;
+            picBoxLeft.Image = (Image)crpImg;
             picBoxLeft.SizeMode = PictureBoxSizeMode.StretchImage;
 
             picBoxLeft.Refresh();//remove the selection rectangle
@@ -505,7 +526,7 @@ namespace FacialPhoto
         {
             picBoxLeft.Image = leftimageLoad;
         }
-        
+
         private void btnDraw_Click(object sender, EventArgs e)
         {
 
@@ -519,10 +540,10 @@ namespace FacialPhoto
             {
                 drawing = true;
                 btnDraw.BackColor = Color.Green;
-                
+
             }
 
-           
+
 
         }
 
@@ -532,17 +553,17 @@ namespace FacialPhoto
             int countX = 0;
             int countY = 50;
 
-         
+
 
             for (int i = 0; i < names.Count; i++)
             {
 
-               
-                    countX +=50;
-                    if (countX > picBoxLeft.Width-50) { countX = 10; countY += 100; }
-                  
-                    circleArray[i] = new Circle(new Point(countX, countY),leftGraphic, Color.Red, 25, i, names[i]);
-               
+
+                countX += 50;
+                if (countX > picBoxLeft.Width - 50) { countX = 10; countY += 100; }
+
+                circleArray[i] = new Circle(new Point(countX, countY), picBoxLeft, Color.Red, 25, i, names[i]);
+
             }
 
             foreach (Circle item in circleArray)
@@ -583,26 +604,7 @@ namespace FacialPhoto
             return angleDeg;
         }
 
-        public void pdfWrite()
-        {
 
-            MemoryStream ms = new MemoryStream();
-            picBoxLeft.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-            byte[] buff = ms.GetBuffer();
-
-            PdfWriter writer = new PdfWriter("D:\\demo.pdf");
-            PdfDocument pdf = new PdfDocument(writer);
-            Document document = new Document(pdf);
-            Paragraph header = new Paragraph("HEADER")
-               .SetTextAlignment(TextAlignment.CENTER)
-               .SetFontSize(20);
-            PdfImage img = new PdfImage(iText.IO.Image.ImageDataFactory.Create(buff))
-                            .SetTextAlignment(TextAlignment.CENTER);
-            document.Add(img);
-            document.Add(header);
-            document.Close();
-
-        }
     }
 }
 
@@ -616,13 +618,11 @@ class Circle : UserControl
     public int _id { get; set; } //the id of the circle created
     public bool _selected; //this circle is selected to move or not
     public String _text;
-    public Graphics _graphicObj { get; set; }
-    public Circle(Point location,Graphics g, Color color, int radius, int id, String text)
+    public Circle(Point location, PictureBox picBox, Color color, int radius, int id, String text)
     {
 
         this._location = location;
-        // this._picBox = picBox;
-        this._graphicObj = g;
+        this._picBox = picBox;
         this._color = color;
         this._radius = radius;
         this._id = id;
@@ -635,11 +635,11 @@ class Circle : UserControl
         Pen p = new Pen(Color.Red);
         SolidBrush b = new SolidBrush(_color);
 
-        //Graphics g = this._picBox.CreateGraphics();
+        Graphics g = this._picBox.CreateGraphics();
 
-       this. _graphicObj.FillEllipse(b, _location.X, _location.Y, this._radius, this._radius);
-        this._graphicObj.DrawString(this._text, new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold), b, new Point(this._location.X, this._location.Y + this._radius - 70));
-        this._graphicObj.Dispose();
+        g.FillEllipse(b, _location.X, _location.Y, this._radius, this._radius);
+        g.DrawString(this._text, new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold), b, new Point(this._location.X, this._location.Y + this._radius - 70));
+        g.Dispose();
 
     }
 
@@ -657,20 +657,20 @@ class Line
 
     public Line(PictureBox picBox)
     {
-        
+
         this._picBox = picBox;
 
     }
 
     public void drawMe()
     {
-        
+
 
         Pen linePen = new Pen(Color.Blue);
         linePen.Width = this._width;
         Graphics lineG = this._picBox.CreateGraphics();
         lineG.DrawLine(linePen, this._startLoc, this._endLoc);
-        
+
         lineG.Dispose();
 
     }
@@ -690,7 +690,7 @@ class Line
         Pen linePen = new Pen(Color.Blue);
         linePen.Width = this._width;
         Graphics lineG = this._picBox.CreateGraphics();
-       
+
         lineG.DrawString(this._text + "cm",
                     new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold),
                    new SolidBrush(Color.Red),
