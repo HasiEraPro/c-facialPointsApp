@@ -8,6 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using DrawingImage = System.Drawing.Image;
+
+using Pdfimage = iText.Layout.Element.Image;
+using iText.Layout.Properties;
+using iText.Layout.Element;
 
 namespace FacialPhoto
 {
@@ -244,7 +251,7 @@ namespace FacialPhoto
 
 
 
-            picBoxRight.Image = (Image)crpImg;
+            picBoxRight.Image = (DrawingImage)crpImg;
             picBoxRight.SizeMode = PictureBoxSizeMode.StretchImage;
 
             picBoxRight.Refresh();//remove the selection rectangle
@@ -431,6 +438,19 @@ namespace FacialPhoto
             lblRightAngle.Text = "Angle:" + answer + "\u00B0";
         }
 
+        private void btnLeftPrint_Click(object sender, EventArgs e)
+        {
+            PdfWriter writer = new PdfWriter("D:\\demo.pdf");
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+            Paragraph header = new Paragraph("HEADER")
+               .SetTextAlignment(TextAlignment.CENTER)
+               .SetFontSize(20);
+
+            document.Add(header);
+            document.Close();
+        }
+
         private void Form1_MouseEnter(object sender, EventArgs e)
         {
 
@@ -516,7 +536,7 @@ namespace FacialPhoto
 
 
 
-            picBoxLeft.Image = (Image)crpImg;
+            picBoxLeft.Image = (DrawingImage)crpImg;
             picBoxLeft.SizeMode = PictureBoxSizeMode.StretchImage;
 
             picBoxLeft.Refresh();//remove the selection rectangle
