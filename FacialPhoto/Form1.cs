@@ -102,7 +102,8 @@ namespace FacialPhoto
 
 
         };
-
+        double angleLeft = 0.0;
+        double angleRight = 0.0;
         private void picBoxLeft_MouseUp(object sender, MouseEventArgs e)
         {
 
@@ -374,38 +375,11 @@ namespace FacialPhoto
 
         private void btnLeftcalculate_Click(object sender, EventArgs e)
         {
-            double p2X = 0.0, p2Y = 0.0, p1X = 0.0, p1Y = 0.0, p3X = 0.0, p3Y = 0.0;
+            
 
-            foreach (Circle item in circleArray)
-            {
-
-                if (item != null)
-                {
-                    if (String.Equals(item._text, "Tr"))
-                    {
-                        p2X = item._location.X;
-                        p2Y = item._location.Y;
-                    }
-
-                    else if (item._text == "Go'")
-                    {
-                        p1X = item._location.X;
-                        p1Y = item._location.Y;
-                    }
-                    else if (item._text == "Gn'")
-                    {
-                        p3X = item._location.X;
-                        p3Y = item._location.Y;
-                    }
-
-
-                }
-
-
-            }
-
-            double answer = calculateAngle(p1X, p1Y, p2X, p2Y, p3X, p3Y);
+            double answer = calculateAngle(circleArray);
             answer = Math.Round(answer, 2, MidpointRounding.ToEven);
+            angleLeft = answer;
 
             lblLeftAngle.Text = "Angle:" + answer + "\u00B0";
         }
@@ -599,19 +573,33 @@ namespace FacialPhoto
                 distanceRight = lineR._text;
 
             }
-            Paragraph distancePara = new Paragraph("Distance(Side)" + distnaceLeft+"cm"+ "Distance(Frontal)" + distanceRight + "cm")
+            Paragraph distancePara = new Paragraph("Distance(Side)" + distnaceLeft+"cm"+ "                    Distance(Frontal)" + distanceRight + "cm")
               .SetTextAlignment(TextAlignment.LEFT)
               .SetFontSize(10);
 
             Paragraph anglePara = new Paragraph("The angle created by the line from “Tr to Go” and “Go to Gn’”")
                .SetTextAlignment(TextAlignment.LEFT)
                .SetFontSize(12).SetBold().SetMarginBottom(15);
+            if (angleLeft <= 0.0)
+            {
+                double answer = calculateAngle(circleArray);
+                answer = Math.Round(answer, 2, MidpointRounding.ToEven);
+                angleLeft = answer;
 
-            Paragraph angleParaLeft = new Paragraph("Angle(Side):")
+            }
+
+            if (angleRight <= 0.0)
+            {
+                double answer = calculateAngle(circleArrayR);
+                answer = Math.Round(answer, 2, MidpointRounding.ToEven);
+                angleRight = answer;
+
+            }
+            Paragraph angleParaLeft = new Paragraph("Angle(Side):" + angleLeft + "\u00B0")
                .SetTextAlignment(TextAlignment.LEFT)
                .SetFontSize(10).SetMarginBottom(10);
 
-            Paragraph angleParaRight = new Paragraph("Angle(Front):")
+            Paragraph angleParaRight = new Paragraph("Angle(Front):" + angleRight + "\u00B0")
                .SetTextAlignment(TextAlignment.LEFT)
                .SetFontSize(10).SetMarginBottom(10);
 
@@ -635,39 +623,11 @@ namespace FacialPhoto
 
         private void btnRightCalculate_Click_1(object sender, EventArgs e)
         {
-            double p2X = 0.0, p2Y = 0.0, p1X = 0.0, p1Y = 0.0, p3X = 0.0, p3Y = 0.0;
+            
 
-            foreach (Circle item in circleArrayR)
-            {
-
-                if (item != null)
-                {
-                    if (String.Equals(item._text, "Tr"))
-                    {
-                        p2X = item._location.X;
-                        p2Y = item._location.Y;
-                    }
-
-                    else if (item._text == "Go'")
-                    {
-                        p1X = item._location.X;
-                        p1Y = item._location.Y;
-                    }
-                    else if (item._text == "Gn'")
-                    {
-                        p3X = item._location.X;
-                        p3Y = item._location.Y;
-                    }
-
-
-                }
-
-
-            }
-
-            double answer = calculateAngle(p1X, p1Y, p2X, p2Y, p3X, p3Y);
+            double answer = calculateAngle(circleArrayR);
             answer = Math.Round(answer, 2, MidpointRounding.ToEven);
-
+            angleRight = answer;
             lblRightAngle.Text = "Angle:" + answer + "\u00B0";
         }
 
@@ -828,6 +788,53 @@ namespace FacialPhoto
         double calculateAngle(double P1X, double P1Y, double P2X, double P2Y,
             double P3X, double P3Y)
         {
+
+            double numerator = P2Y * (P1X - P3X) + P1Y * (P3X - P2X) + P3Y * (P2X - P1X);
+            double denominator = (P2X - P1X) * (P1X - P3X) + (P2Y - P1Y) * (P1Y - P3Y);
+            double ratio = numerator / denominator;
+
+            double angleRad = Math.Atan(ratio);
+            double angleDeg = (angleRad * 180) / Math.PI;
+
+            if (angleDeg < 0)
+            {
+                angleDeg = 180 + angleDeg;
+            }
+
+            return angleDeg;
+        }
+
+        double calculateAngle(Circle [] circleArray)
+        {
+            double P2X = 0.0, P2Y = 0.0, P1X = 0.0, P1Y = 0.0, P3X = 0.0, P3Y = 0.0;
+
+            foreach (Circle item in circleArray)
+            {
+
+                if (item != null)
+                {
+                    if (String.Equals(item._text, "Tr"))
+                    {
+                        P2X = item._location.X;
+                        P2Y = item._location.Y;
+                    }
+
+                    else if (item._text == "Go'")
+                    {
+                        P1X = item._location.X;
+                        P1Y = item._location.Y;
+                    }
+                    else if (item._text == "Gn'")
+                    {
+                        P3X = item._location.X;
+                        P3Y = item._location.Y;
+                    }
+
+
+                }
+
+
+            }
 
             double numerator = P2Y * (P1X - P3X) + P1Y * (P3X - P2X) + P3Y * (P2X - P1X);
             double denominator = (P2X - P1X) * (P1X - P3X) + (P2Y - P1Y) * (P1Y - P3Y);
