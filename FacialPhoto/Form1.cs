@@ -287,7 +287,7 @@ namespace FacialPhoto
                 countX += 50;
                 if (countX > picBoxLeft.Width - 50) { countX = 10; countY += 100; }
 
-                circleArrayR[i] = new Circle(new Point(countX, countY), picBoxRight, Color.Red, 25, i, names[i]);
+                circleArrayR[i] = new Circle(new Point(countX, countY), picBoxRight, Color.Red, 15, i, names[i]);
 
             }
 
@@ -493,28 +493,32 @@ namespace FacialPhoto
                 {
                     linePen.Width = (line == null) ? 10 : line._width;
                     g.DrawLine(linePen, line._startLoc, line._endLoc);
-                    gr.DrawLine(linePen, lineR._startLoc, lineR._endLoc);
+
+                
                     Point mid = line.midpoint(line._startLoc, line._endLoc);
-                    Point midR = line.midpoint(lineR._startLoc, lineR._endLoc);
+                   
                     g.DrawString(line._text + "cm",
                        new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold),
                       new SolidBrush(Color.Red),
                        new Point(mid.X, mid.Y - 10));
 
-                    gr.DrawString(lineR._text + "cm",
+                    
+                }
+
+            if (lineR != null)
+
+            {
+
+                gr.DrawLine(linePen, lineR._startLoc, lineR._endLoc);
+                Point midR = line.midpoint(lineR._startLoc, lineR._endLoc);
+                gr.DrawString(lineR._text + "cm",
                           new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold),
                          new SolidBrush(Color.Red),
                           new Point(midR.X, midR.Y - 10));
-                }
+            }
 
 
-
-
-
-
-
-
-
+                
 
                 MemoryStream ms = new MemoryStream();
                 MemoryStream msR = new MemoryStream();
@@ -762,7 +766,7 @@ namespace FacialPhoto
                 countX += 50;
                 if (countX > picBoxLeft.Width - 50) { countX = 10; countY += 100; }
 
-                circleArray[i] = new Circle(new Point(countX, countY), picBoxLeft, Color.Red, 25, i, names[i]);
+                circleArray[i] = new Circle(new Point(countX, countY), picBoxLeft, Color.Red, 15, i, names[i]);
 
             }
 

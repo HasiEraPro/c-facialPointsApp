@@ -49,7 +49,6 @@
             this.btnRightReset = new System.Windows.Forms.Button();
             this.btnRightLoad = new System.Windows.Forms.Button();
             this.btnRightDraw = new System.Windows.Forms.Button();
-            this.btnRightPrint = new System.Windows.Forms.Button();
             this.lblRightAngle = new System.Windows.Forms.Label();
             this.btnRightCalculate = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
@@ -77,7 +76,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.2807F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 87.7193F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1164, 561);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1216, 610);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // picBoxLeft
@@ -85,9 +84,9 @@
             this.picBoxLeft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBoxLeft.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picBoxLeft.Image = global::FacialPhoto.Properties.Resources.exampleSide;
-            this.picBoxLeft.Location = new System.Drawing.Point(3, 71);
+            this.picBoxLeft.Location = new System.Drawing.Point(3, 77);
             this.picBoxLeft.Name = "picBoxLeft";
-            this.picBoxLeft.Size = new System.Drawing.Size(576, 487);
+            this.picBoxLeft.Size = new System.Drawing.Size(602, 530);
             this.picBoxLeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picBoxLeft.TabIndex = 0;
             this.picBoxLeft.TabStop = false;
@@ -100,9 +99,9 @@
             this.picBoxRight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBoxRight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picBoxRight.Image = ((System.Drawing.Image)(resources.GetObject("picBoxRight.Image")));
-            this.picBoxRight.Location = new System.Drawing.Point(585, 71);
+            this.picBoxRight.Location = new System.Drawing.Point(611, 77);
             this.picBoxRight.Name = "picBoxRight";
-            this.picBoxRight.Size = new System.Drawing.Size(576, 487);
+            this.picBoxRight.Size = new System.Drawing.Size(602, 530);
             this.picBoxRight.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picBoxRight.TabIndex = 1;
             this.picBoxRight.TabStop = false;
@@ -126,84 +125,100 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(576, 62);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(602, 68);
             this.flowLayoutPanel1.TabIndex = 2;
             // 
             // btnBrowseLeft
             // 
+            this.btnBrowseLeft.BackColor = System.Drawing.Color.Aqua;
+            this.btnBrowseLeft.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
+            this.btnBrowseLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBrowseLeft.Location = new System.Drawing.Point(3, 3);
             this.btnBrowseLeft.Name = "btnBrowseLeft";
-            this.btnBrowseLeft.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowseLeft.Size = new System.Drawing.Size(136, 34);
             this.btnBrowseLeft.TabIndex = 0;
             this.btnBrowseLeft.Text = "Browse";
-            this.btnBrowseLeft.UseVisualStyleBackColor = true;
+            this.btnBrowseLeft.UseVisualStyleBackColor = false;
             this.btnBrowseLeft.Click += new System.EventHandler(this.btnBrowseLeft_Click);
             // 
             // btnCropLeft
             // 
-            this.btnCropLeft.Location = new System.Drawing.Point(84, 3);
+            this.btnCropLeft.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnCropLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCropLeft.Location = new System.Drawing.Point(145, 3);
             this.btnCropLeft.Name = "btnCropLeft";
-            this.btnCropLeft.Size = new System.Drawing.Size(75, 23);
+            this.btnCropLeft.Size = new System.Drawing.Size(75, 34);
             this.btnCropLeft.TabIndex = 1;
             this.btnCropLeft.Text = "Crop";
-            this.btnCropLeft.UseVisualStyleBackColor = true;
+            this.btnCropLeft.UseVisualStyleBackColor = false;
             this.btnCropLeft.Click += new System.EventHandler(this.btnCropLeft_Click);
             // 
             // btnCropInitLeft
             // 
-            this.btnCropInitLeft.Location = new System.Drawing.Point(165, 3);
+            this.btnCropInitLeft.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnCropInitLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCropInitLeft.Location = new System.Drawing.Point(226, 3);
             this.btnCropInitLeft.Name = "btnCropInitLeft";
-            this.btnCropInitLeft.Size = new System.Drawing.Size(75, 23);
+            this.btnCropInitLeft.Size = new System.Drawing.Size(111, 34);
             this.btnCropInitLeft.TabIndex = 2;
             this.btnCropInitLeft.Text = "Select Crop";
-            this.btnCropInitLeft.UseVisualStyleBackColor = true;
+            this.btnCropInitLeft.UseVisualStyleBackColor = false;
             this.btnCropInitLeft.Click += new System.EventHandler(this.btnCropInitLeft_Click);
             // 
             // btnUndo
             // 
-            this.btnUndo.Location = new System.Drawing.Point(246, 3);
+            this.btnUndo.BackColor = System.Drawing.Color.OrangeRed;
+            this.btnUndo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUndo.Location = new System.Drawing.Point(343, 3);
             this.btnUndo.Name = "btnUndo";
-            this.btnUndo.Size = new System.Drawing.Size(104, 23);
+            this.btnUndo.Size = new System.Drawing.Size(104, 34);
             this.btnUndo.TabIndex = 3;
             this.btnUndo.Text = "Reset  Image";
-            this.btnUndo.UseVisualStyleBackColor = true;
+            this.btnUndo.UseVisualStyleBackColor = false;
             this.btnUndo.Click += new System.EventHandler(this.btnUndo_Click);
             // 
             // btnLoadPoints
             // 
-            this.btnLoadPoints.Location = new System.Drawing.Point(356, 3);
+            this.btnLoadPoints.BackColor = System.Drawing.Color.Orange;
+            this.btnLoadPoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLoadPoints.Location = new System.Drawing.Point(453, 3);
             this.btnLoadPoints.Name = "btnLoadPoints";
-            this.btnLoadPoints.Size = new System.Drawing.Size(129, 23);
+            this.btnLoadPoints.Size = new System.Drawing.Size(136, 34);
             this.btnLoadPoints.TabIndex = 4;
             this.btnLoadPoints.Text = "Load Points";
-            this.btnLoadPoints.UseVisualStyleBackColor = true;
+            this.btnLoadPoints.UseVisualStyleBackColor = false;
             this.btnLoadPoints.Click += new System.EventHandler(this.btnLoadPoints_Click);
             // 
             // btnDraw
             // 
-            this.btnDraw.Location = new System.Drawing.Point(3, 32);
+            this.btnDraw.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnDraw.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
+            this.btnDraw.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDraw.Location = new System.Drawing.Point(3, 43);
             this.btnDraw.Name = "btnDraw";
-            this.btnDraw.Size = new System.Drawing.Size(156, 23);
+            this.btnDraw.Size = new System.Drawing.Size(156, 35);
             this.btnDraw.TabIndex = 5;
             this.btnDraw.Text = "Draw Line";
-            this.btnDraw.UseVisualStyleBackColor = true;
+            this.btnDraw.UseVisualStyleBackColor = false;
             this.btnDraw.Click += new System.EventHandler(this.btnDraw_Click);
             // 
             // btnLeftPrint
             // 
-            this.btnLeftPrint.Location = new System.Drawing.Point(165, 32);
+            this.btnLeftPrint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.btnLeftPrint.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLeftPrint.Location = new System.Drawing.Point(165, 43);
             this.btnLeftPrint.Name = "btnLeftPrint";
-            this.btnLeftPrint.Size = new System.Drawing.Size(75, 23);
+            this.btnLeftPrint.Size = new System.Drawing.Size(174, 35);
             this.btnLeftPrint.TabIndex = 6;
             this.btnLeftPrint.Text = "Process";
-            this.btnLeftPrint.UseVisualStyleBackColor = true;
+            this.btnLeftPrint.UseVisualStyleBackColor = false;
             this.btnLeftPrint.Click += new System.EventHandler(this.btnLeftPrint_Click);
             // 
             // lblLeftAngle
             // 
             this.lblLeftAngle.AutoSize = true;
             this.lblLeftAngle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLeftAngle.Location = new System.Drawing.Point(246, 29);
+            this.lblLeftAngle.Location = new System.Drawing.Point(345, 40);
             this.lblLeftAngle.Name = "lblLeftAngle";
             this.lblLeftAngle.Size = new System.Drawing.Size(65, 24);
             this.lblLeftAngle.TabIndex = 7;
@@ -212,12 +227,14 @@
             // 
             // btnLeftcalculate
             // 
-            this.btnLeftcalculate.Location = new System.Drawing.Point(317, 32);
+            this.btnLeftcalculate.BackColor = System.Drawing.Color.Aquamarine;
+            this.btnLeftcalculate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLeftcalculate.Location = new System.Drawing.Point(416, 43);
             this.btnLeftcalculate.Name = "btnLeftcalculate";
-            this.btnLeftcalculate.Size = new System.Drawing.Size(125, 23);
+            this.btnLeftcalculate.Size = new System.Drawing.Size(175, 35);
             this.btnLeftcalculate.TabIndex = 8;
             this.btnLeftcalculate.Text = "Calculate Angle";
-            this.btnLeftcalculate.UseVisualStyleBackColor = true;
+            this.btnLeftcalculate.UseVisualStyleBackColor = false;
             this.btnLeftcalculate.Click += new System.EventHandler(this.btnLeftcalculate_Click);
             // 
             // flowLayoutPanel2
@@ -230,89 +247,91 @@
             this.flowLayoutPanel2.Controls.Add(this.btnRightReset);
             this.flowLayoutPanel2.Controls.Add(this.btnRightLoad);
             this.flowLayoutPanel2.Controls.Add(this.btnRightDraw);
-            this.flowLayoutPanel2.Controls.Add(this.btnRightPrint);
             this.flowLayoutPanel2.Controls.Add(this.lblRightAngle);
             this.flowLayoutPanel2.Controls.Add(this.btnRightCalculate);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(585, 3);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(611, 3);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(576, 62);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(602, 68);
             this.flowLayoutPanel2.TabIndex = 3;
             // 
             // btnBrowseRight
             // 
+            this.btnBrowseRight.BackColor = System.Drawing.Color.Aqua;
+            this.btnBrowseRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBrowseRight.Location = new System.Drawing.Point(3, 3);
             this.btnBrowseRight.Name = "btnBrowseRight";
-            this.btnBrowseRight.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowseRight.Size = new System.Drawing.Size(121, 34);
             this.btnBrowseRight.TabIndex = 0;
             this.btnBrowseRight.Text = "Browse";
-            this.btnBrowseRight.UseVisualStyleBackColor = true;
+            this.btnBrowseRight.UseVisualStyleBackColor = false;
             this.btnBrowseRight.Click += new System.EventHandler(this.btnBrowseRight_Click);
             // 
             // btnCropRight
             // 
-            this.btnCropRight.Location = new System.Drawing.Point(84, 3);
+            this.btnCropRight.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnCropRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCropRight.Location = new System.Drawing.Point(130, 3);
             this.btnCropRight.Name = "btnCropRight";
-            this.btnCropRight.Size = new System.Drawing.Size(75, 23);
+            this.btnCropRight.Size = new System.Drawing.Size(68, 34);
             this.btnCropRight.TabIndex = 1;
             this.btnCropRight.Text = "Crop";
-            this.btnCropRight.UseVisualStyleBackColor = true;
+            this.btnCropRight.UseVisualStyleBackColor = false;
             this.btnCropRight.Click += new System.EventHandler(this.btnCropRight_Click);
             // 
             // btnCropInitRight
             // 
-            this.btnCropInitRight.Location = new System.Drawing.Point(165, 3);
+            this.btnCropInitRight.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnCropInitRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCropInitRight.Location = new System.Drawing.Point(204, 3);
             this.btnCropInitRight.Name = "btnCropInitRight";
-            this.btnCropInitRight.Size = new System.Drawing.Size(75, 23);
+            this.btnCropInitRight.Size = new System.Drawing.Size(110, 34);
             this.btnCropInitRight.TabIndex = 2;
             this.btnCropInitRight.Text = "Select Crop";
-            this.btnCropInitRight.UseVisualStyleBackColor = true;
+            this.btnCropInitRight.UseVisualStyleBackColor = false;
             this.btnCropInitRight.Click += new System.EventHandler(this.btnCropInitRight_Click);
             // 
             // btnRightReset
             // 
-            this.btnRightReset.Location = new System.Drawing.Point(246, 3);
+            this.btnRightReset.BackColor = System.Drawing.Color.OrangeRed;
+            this.btnRightReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRightReset.Location = new System.Drawing.Point(320, 3);
             this.btnRightReset.Name = "btnRightReset";
-            this.btnRightReset.Size = new System.Drawing.Size(75, 23);
+            this.btnRightReset.Size = new System.Drawing.Size(110, 34);
             this.btnRightReset.TabIndex = 3;
             this.btnRightReset.Text = "Reset image";
-            this.btnRightReset.UseVisualStyleBackColor = true;
+            this.btnRightReset.UseVisualStyleBackColor = false;
             this.btnRightReset.Click += new System.EventHandler(this.btnRightReset_Click);
             // 
             // btnRightLoad
             // 
-            this.btnRightLoad.Location = new System.Drawing.Point(327, 3);
+            this.btnRightLoad.BackColor = System.Drawing.Color.Orange;
+            this.btnRightLoad.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRightLoad.Location = new System.Drawing.Point(436, 3);
             this.btnRightLoad.Name = "btnRightLoad";
-            this.btnRightLoad.Size = new System.Drawing.Size(117, 23);
+            this.btnRightLoad.Size = new System.Drawing.Size(121, 34);
             this.btnRightLoad.TabIndex = 4;
             this.btnRightLoad.Text = "Load Points";
-            this.btnRightLoad.UseVisualStyleBackColor = true;
+            this.btnRightLoad.UseVisualStyleBackColor = false;
             this.btnRightLoad.Click += new System.EventHandler(this.btnRightLoad_Click);
             // 
             // btnRightDraw
             // 
-            this.btnRightDraw.Location = new System.Drawing.Point(3, 32);
+            this.btnRightDraw.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnRightDraw.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRightDraw.Location = new System.Drawing.Point(3, 43);
             this.btnRightDraw.Name = "btnRightDraw";
-            this.btnRightDraw.Size = new System.Drawing.Size(124, 23);
+            this.btnRightDraw.Size = new System.Drawing.Size(121, 31);
             this.btnRightDraw.TabIndex = 5;
             this.btnRightDraw.Text = "Draw Line";
-            this.btnRightDraw.UseVisualStyleBackColor = true;
+            this.btnRightDraw.UseVisualStyleBackColor = false;
             this.btnRightDraw.Click += new System.EventHandler(this.btnRightDraw_Click);
-            // 
-            // btnRightPrint
-            // 
-            this.btnRightPrint.Location = new System.Drawing.Point(133, 32);
-            this.btnRightPrint.Name = "btnRightPrint";
-            this.btnRightPrint.Size = new System.Drawing.Size(75, 23);
-            this.btnRightPrint.TabIndex = 6;
-            this.btnRightPrint.Text = "Process";
-            this.btnRightPrint.UseVisualStyleBackColor = true;
             // 
             // lblRightAngle
             // 
             this.lblRightAngle.AutoSize = true;
             this.lblRightAngle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRightAngle.Location = new System.Drawing.Point(214, 29);
+            this.lblRightAngle.Location = new System.Drawing.Point(130, 40);
             this.lblRightAngle.Name = "lblRightAngle";
             this.lblRightAngle.Size = new System.Drawing.Size(69, 25);
             this.lblRightAngle.TabIndex = 7;
@@ -320,20 +339,24 @@
             // 
             // btnRightCalculate
             // 
-            this.btnRightCalculate.Location = new System.Drawing.Point(289, 32);
+            this.btnRightCalculate.BackColor = System.Drawing.Color.Aquamarine;
+            this.btnRightCalculate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRightCalculate.Location = new System.Drawing.Point(205, 43);
             this.btnRightCalculate.Name = "btnRightCalculate";
-            this.btnRightCalculate.Size = new System.Drawing.Size(134, 23);
+            this.btnRightCalculate.Size = new System.Drawing.Size(225, 31);
             this.btnRightCalculate.TabIndex = 8;
             this.btnRightCalculate.Text = "Calculate Angle";
-            this.btnRightCalculate.UseVisualStyleBackColor = true;
+            this.btnRightCalculate.UseVisualStyleBackColor = false;
             this.btnRightCalculate.Click += new System.EventHandler(this.btnRightCalculate_Click_1);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1164, 561);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.ClientSize = new System.Drawing.Size(1216, 610);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.DoubleBuffered = true;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Facial  Tag  App";
@@ -370,7 +393,6 @@
         private System.Windows.Forms.Button btnRightReset;
         private System.Windows.Forms.Button btnRightLoad;
         private System.Windows.Forms.Button btnRightDraw;
-        private System.Windows.Forms.Button btnRightPrint;
         private System.Windows.Forms.Label lblLeftAngle;
         private System.Windows.Forms.Label lblRightAngle;
         private System.Windows.Forms.PictureBox picBoxLeft;
