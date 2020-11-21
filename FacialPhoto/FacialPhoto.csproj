@@ -107,6 +107,12 @@
     <Compile Include="msg.Designer.cs">
       <DependentUpon>msg.cs</DependentUpon>
     </Compile>
+    <Compile Include="msg2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="msg2.Designer.cs">
+      <DependentUpon>msg2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -114,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="msg.resx">
       <DependentUpon>msg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="msg2.resx">
+      <DependentUpon>msg2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

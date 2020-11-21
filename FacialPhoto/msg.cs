@@ -16,9 +16,9 @@ namespace FacialPhoto
         //public double angle { get; set; }
 
         public static string assym = "";
-        public static string support = "";
+       
 
-
+     
 
         public msg()
         {
@@ -28,7 +28,7 @@ namespace FacialPhoto
         private void btnPrint_Click(object sender, EventArgs e)
         {
 
-            if (assym == "" || support == "")
+            if (assym == "")
             {
 
                 btnPrint.Enabled = false;
@@ -38,17 +38,22 @@ namespace FacialPhoto
             else
             {
                 Form1.answerAssym = msg.assym;
-                Form1.answerSupport = msg.support;
-                this.Hide();
+                msg2 f2 = new msg2();
+                f2.ShowDialog();
+                    this.Hide();
 
             }
+
+
+
+
 
 
         }
 
         private void cboxDOA_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (assym != "" || support != "") btnPrint.Enabled = true;
+            if (assym != "" ) btnPrint.Enabled = true;
             
             switch (cboxDOA.SelectedIndex)
             {
@@ -63,16 +68,13 @@ namespace FacialPhoto
 
         }
 
-        private void txtBoxSupport_TextChanged(object sender, EventArgs e)
-        {
-            msg.support = txtBoxSupport.Text;
-            if (assym != "" || support != "") btnPrint.Enabled = true;
-            
-        }
+       
 
         private void msg_Load(object sender, EventArgs e)
         {
             cboxDOA.SelectedText = "--select--";
+            
+
         }
     }
 }
