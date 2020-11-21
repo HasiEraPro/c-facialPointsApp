@@ -144,6 +144,7 @@
             // btnCropLeft
             // 
             this.btnCropLeft.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnCropLeft.Enabled = false;
             this.btnCropLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCropLeft.Location = new System.Drawing.Point(145, 3);
             this.btnCropLeft.Name = "btnCropLeft";
@@ -270,6 +271,7 @@
             // btnCropRight
             // 
             this.btnCropRight.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnCropRight.Enabled = false;
             this.btnCropRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCropRight.Location = new System.Drawing.Point(130, 3);
             this.btnCropRight.Name = "btnCropRight";

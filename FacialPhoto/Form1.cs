@@ -27,9 +27,12 @@ namespace FacialPhoto
 {
     public partial class Form1 : Form
     {
-        public  static string answerAssym = "";
-        public  static string answerSupport = "";
-        
+        public static string answerAssym = "";
+        public static string answerSupport = "";
+        public static double mmtoPixelRatio;
+        public static double mmtoPixelRatioR;
+        public double distanceInMm = 0.0;
+        public double distanceInMmR = 0.0;
         public Form1()
         {
             InitializeComponent();
@@ -98,12 +101,17 @@ namespace FacialPhoto
 
         {
             "V'","Tr'","Eu'","G'","Op'","Ft","Na'","Ps","Ex","En","Pi","Or'","Rh'","Zy'","Tr","Prn",
-            "C'","Al","Ac","Sn","Spl","Ls","Sts","St","Ch","Sti","Li","Sbl","Pog'","Gn'","Me'","Go'","C"
+            "C'","Al","Ac","Sn","Spl","Ls","Sts","St","Ch","Sti","Li","Sbl","Pog'","Gn'","Me'","Go'","C",
+            "GO'L","GO'R"
 
 
         };
         double angleLeft = 0.0;
         double angleRight = 0.0;
+
+        Point golCircle, gorCircle;
+        Point golCircleR, gorCircleR;
+
         private void picBoxLeft_MouseUp(object sender, MouseEventArgs e)
         {
 
@@ -128,14 +136,17 @@ namespace FacialPhoto
             {
 
                 lineR._endLoc = e.Location;
-                lineR.drawMe();
+                //lineR.drawMe();
 
 
                 btnRightDraw.BackColor = Color.LightGray;
                 String content = Interaction.InputBox("Enter Your Value from cm", "Distance Between", "10", 500, 500);
 
+                Form1.mmtoPixelRatioR = Distance(lineR._startLoc, lineR._endLoc, Convert.ToInt32(content));
+                Console.WriteLine("right distance ratio" + mmtoPixelRatioR);
+
                 lineR._text = content;
-                lineR.drawText();
+                //lineR.drawText();
 
                 drawingLineR = false;
                 drawingR = false;
@@ -196,16 +207,29 @@ namespace FacialPhoto
                     Refresh();
 
                     item._location = new Point(e.X, e.Y);
+                    if (String.Equals(item._text, "GO'L"))
+                    {
 
+                        golCircleR = item._location;
+
+                    }
+                    if (String.Equals(item._text, "GO'R"))
+                    {
+
+                        gorCircleR = item._location;
+
+                    }
 
                 }
+
+               
 
                 if (item != null) item.drawMe();
-                if (lineR != null)
-                {
-                    lineR.drawMe();
-                    if (lineR._text != null) lineR.drawText();
-                }
+                //if (lineR != null)
+                //{
+                //    lineR.drawMe();
+                //    if (lineR._text != null) lineR.drawText();
+                //}
             }
 
             if ((e.Button == MouseButtons.Left) && startSelectionRight)
@@ -323,14 +347,20 @@ namespace FacialPhoto
             {
 
                 line._endLoc = e.Location;
-                line.drawMe();
+
+               
+
+                //line.drawMe();
 
 
                 btnDraw.BackColor = Color.LightGray;
-                String content = Interaction.InputBox("Enter Your Value from cm", "Distance Between", "10", 500, 500);
+                String content = Interaction.InputBox("Enter Your Value from mm", "Distance Between", "10", 500, 500);
 
                 line._text = content;
-                line.drawText();
+
+                Form1.mmtoPixelRatio =  Distance(line._startLoc,line._endLoc,Convert.ToInt32(content));
+                Console.WriteLine("left distance ratio"+mmtoPixelRatio);
+                //line.drawText();
 
                 drawingLine = false;
                 drawing = false;
@@ -375,7 +405,7 @@ namespace FacialPhoto
 
         private void btnLeftcalculate_Click(object sender, EventArgs e)
         {
-            
+
 
             double answer = calculateAngle(circleArray);
             answer = Math.Round(answer, 2, MidpointRounding.ToEven);
@@ -424,6 +454,12 @@ namespace FacialPhoto
 
         private void btnLeftPrint_Click(object sender, EventArgs e)
         {
+            distanceInMm = Math.Round(Distance(golCircle, gorCircle) * mmtoPixelRatio, 2, MidpointRounding.ToEven);
+            Console.WriteLine("distance in mm:" + distanceInMm);
+
+            distanceInMmR = Math.Round(Distance(golCircleR, gorCircleR) * mmtoPixelRatioR, 2, MidpointRounding.ToEven);
+            Console.WriteLine("distance in mm:" + distanceInMmR);
+
             msg f2 = new msg();
             f2.ShowDialog();//this way the form1 will hold untill the form 2(msg form ) is closed
 
@@ -431,102 +467,74 @@ namespace FacialPhoto
             SaveFileDialog sf = new SaveFileDialog();
             sf.InitialDirectory = @"C:\";
             sf.Title = "Save Pdf in";
-           sf.Filter = "Pdf files (*.pdf)|*.pdf|All files (*.*)|*.*";
+            sf.Filter = "Pdf files (*.pdf)|*.pdf|All files (*.*)|*.*";
             if (sf.ShowDialog() == DialogResult.OK)
             {
                 savePdfFilePath = System.IO.Path.GetFullPath(sf.FileName);
             }
-                PdfWriter writer = new PdfWriter(savePdfFilePath);
-                PdfDocument pdf = new PdfDocument(writer);
+            PdfWriter writer = new PdfWriter(savePdfFilePath);
+            PdfDocument pdf = new PdfDocument(writer);
 
-                float a4Width = PageSize.A4.GetWidth();
-                float a4Height = PageSize.A4.GetHeight();
-                PageSize pagesize = new PageSize(a4Width, a4Height);
-                pdf.SetDefaultPageSize(pagesize);
-
-
-                Document document = new Document(pdf);
+            float a4Width = PageSize.A4.GetWidth();
+            float a4Height = PageSize.A4.GetHeight();
+            PageSize pagesize = new PageSize(a4Width, a4Height);
+            pdf.SetDefaultPageSize(pagesize);
 
 
-
-                Pen p = new Pen(Color.Red);
-                SolidBrush b = new SolidBrush(Color.Red);
-                //Bitmap bmap = new Bitmap(picBoxLeft.Width, picBoxLeft.Height);
-
-                Bitmap bmap = new Bitmap(picBoxLeft.Image, picBoxLeft.Width, picBoxLeft.Height);
-                Bitmap bmapRight = new Bitmap(picBoxRight.Image, picBoxRight.Width, picBoxRight.Height);
+            Document document = new Document(pdf);
 
 
-                bmap.MakeTransparent();
-                bmapRight.MakeTransparent();
 
-                Graphics g = Graphics.FromImage(bmap);
-                Graphics gr = Graphics.FromImage(bmapRight);
+            Pen p = new Pen(Color.Red);
+            SolidBrush b = new SolidBrush(Color.Red);
+            //Bitmap bmap = new Bitmap(picBoxLeft.Width, picBoxLeft.Height);
 
-                foreach (Circle item in circleArray)
-                {
-                    if (item != null)
-                    {
+            Bitmap bmap = new Bitmap(picBoxLeft.Image, picBoxLeft.Width, picBoxLeft.Height);
+            Bitmap bmapRight = new Bitmap(picBoxRight.Image, picBoxRight.Width, picBoxRight.Height);
 
-                        g.FillEllipse(b, item._location.X, item._location.Y, item._radius, item._radius);
-                        g.DrawString(item._text, new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold), b, new Point(item._location.X, item._location.Y + item._radius - 70));
-                        //g.Dispose();
 
-                    }
+            bmap.MakeTransparent();
+            bmapRight.MakeTransparent();
 
-                }
-                foreach (Circle item in circleArrayR)
-                {
-                    if (item != null)
-                    {
+            Graphics g = Graphics.FromImage(bmap);
+            Graphics gr = Graphics.FromImage(bmapRight);
 
-                        gr.FillEllipse(b, item._location.X, item._location.Y, item._radius, item._radius);
-                        gr.DrawString(item._text, new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold), b, new Point(item._location.X, item._location.Y + item._radius - 70));
-                        //g.Dispose();
-
-                    }
-
-                }
-
-                Pen linePen = new Pen(Color.Blue);
-                if (line != null)
-                {
-                    linePen.Width = (line == null) ? 10 : line._width;
-                    g.DrawLine(linePen, line._startLoc, line._endLoc);
-
-                
-                    Point mid = line.midpoint(line._startLoc, line._endLoc);
-                   
-                    g.DrawString(line._text + "cm",
-                       new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold),
-                      new SolidBrush(Color.Red),
-                       new Point(mid.X, mid.Y - 10));
-
-                    
-                }
-
-            if (lineR != null)
-
+            foreach (Circle item in circleArray)
             {
+                if (item != null)
+                {
 
-                gr.DrawLine(linePen, lineR._startLoc, lineR._endLoc);
-                Point midR = line.midpoint(lineR._startLoc, lineR._endLoc);
-                gr.DrawString(lineR._text + "cm",
-                          new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold),
-                         new SolidBrush(Color.Red),
-                          new Point(midR.X, midR.Y - 10));
+                    g.FillEllipse(b, item._location.X, item._location.Y, item._radius, item._radius);
+                    g.DrawString(item._text, new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold), b, new Point(item._location.X, item._location.Y + item._radius - 70));
+                    //g.Dispose();
+
+                }
+
+            }
+            foreach (Circle item in circleArrayR)
+            {
+                if (item != null)
+                {
+
+                    gr.FillEllipse(b, item._location.X, item._location.Y, item._radius, item._radius);
+                    gr.DrawString(item._text, new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold), b, new Point(item._location.X, item._location.Y + item._radius - 70));
+                    //g.Dispose();
+
+                }
+
             }
 
+            
 
-                
 
-                MemoryStream ms = new MemoryStream();
-                MemoryStream msR = new MemoryStream();
-                bmap.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                bmapRight.Save(msR, System.Drawing.Imaging.ImageFormat.Jpeg);
 
-                byte[] buff = ms.GetBuffer();
-                byte[] buffR = msR.GetBuffer();
+            MemoryStream ms = new MemoryStream();
+            MemoryStream msR = new MemoryStream();
+            bmap.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            bmapRight.Save(msR, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            byte[] buff = ms.GetBuffer();
+            byte[] buffR = msR.GetBuffer();
 
             Paragraph header = new Paragraph("Created From Facial Mark App")
                .SetTextAlignment(TextAlignment.CENTER)
@@ -534,19 +542,19 @@ namespace FacialPhoto
 
 
 
-                PdfImage img = new PdfImage(iText.IO.Image.ImageDataFactory
-                                        .Create(buff)).SetTextAlignment(TextAlignment.LEFT);
-                PdfImage imgR = new PdfImage(iText.IO.Image.ImageDataFactory
-                                        .Create(buffR)).SetTextAlignment(TextAlignment.RIGHT);
+            PdfImage img = new PdfImage(iText.IO.Image.ImageDataFactory
+                                    .Create(buff)).SetTextAlignment(TextAlignment.LEFT);
+            PdfImage imgR = new PdfImage(iText.IO.Image.ImageDataFactory
+                                    .Create(buffR)).SetTextAlignment(TextAlignment.RIGHT);
 
-                Table table = new Table(1).SetTextAlignment(TextAlignment.CENTER);
-                Paragraph p1 = new Paragraph();
-                img.Scale(0.3f, 0.3f);
-                imgR.Scale(0.3f, 0.3f);
-                p1.Add(img);
-                p1.Add(imgR);
+            Table table = new Table(1).SetTextAlignment(TextAlignment.CENTER);
+            Paragraph p1 = new Paragraph();
+            img.Scale(0.3f, 0.3f);
+            imgR.Scale(0.3f, 0.3f);
+            p1.Add(img);
+            p1.Add(imgR);
 
-                table.AddCell(p1);
+            table.AddCell(p1);
 
             // Line separator
             LineSeparator ls = new LineSeparator(new SolidLine()).SetMarginBottom(10); ;
@@ -554,30 +562,19 @@ namespace FacialPhoto
                 .SetTextAlignment(TextAlignment.LEFT)
                 .SetFontSize(15).SetMarginBottom(20);
 
-          
 
-            Paragraph answerAssym = new Paragraph("Degree of asymmetry:-"+Form1.answerAssym)
+
+            Paragraph answerAssym = new Paragraph("Degree of asymmetry:-" + Form1.answerAssym)
                .SetTextAlignment(TextAlignment.LEFT)
                .SetFontSize(10);
 
             Paragraph answerSupport = new Paragraph("Degree of undereye support :-" + Form1.answerSupport)
                .SetTextAlignment(TextAlignment.LEFT)
                .SetFontSize(10);
-            string distnaceLeft="NULL";
-            string distanceRight = "NULL";
+           
 
-            if (line != null)
-            {
-
-                distnaceLeft = line._text;
-            }
-            if (lineR != null)
-            {
-
-                distanceRight = lineR._text;
-
-            }
-            Paragraph distancePara = new Paragraph("Distance(Side)" + distnaceLeft+"cm"+ "                    Distance(Frontal)" + distanceRight + "cm")
+            
+            Paragraph distancePara = new Paragraph("Distance(Side)" + Math.Round(distanceInMm / 10,2,MidpointRounding.ToEven) + "cm" + "                    Distance(Frontal)" + Math.Round(distanceInMmR/10,2,MidpointRounding.ToEven) + "cm")
               .SetTextAlignment(TextAlignment.LEFT)
               .SetFontSize(10);
 
@@ -621,13 +618,13 @@ namespace FacialPhoto
             //document.Add(imgR);
             document.Close();
 
-            
-            
+            MessageBox.Show("Successfully Saved Pdf");
+
         }
 
         private void btnRightCalculate_Click_1(object sender, EventArgs e)
         {
-            
+
 
             double answer = calculateAngle(circleArrayR);
             answer = Math.Round(answer, 2, MidpointRounding.ToEven);
@@ -639,9 +636,12 @@ namespace FacialPhoto
         {
 
         }
+
+        
         private void picBoxLeft_MouseMove(object sender, MouseEventArgs e)
         {
             base.OnMouseMove(e);
+            
 
             if (drawingLine)
             {
@@ -661,16 +661,33 @@ namespace FacialPhoto
 
                     item._location = new Point(e.X, e.Y);
 
+                    if (String.Equals(item._text, "GO'L") )
+                    {
+
+                        golCircle = item._location;    
+                            
+                    }
+                    if (String.Equals(item._text, "GO'R"))
+                    {
+
+                        gorCircle = item._location;
+
+                    }
 
                 }
+
+
 
                 if (item != null) item.drawMe();
-                if (line != null)
-                {
-                    line.drawMe();
-                    if (line._text != null) line.drawText();
-                }
+                //if (line != null)
+                //{
+                //    line.drawMe();
+                //    if (line._text != null) line.drawText();
+                //}
             }
+
+
+        
 
             if ((e.Button == MouseButtons.Left) && startSelection)
             {
@@ -689,6 +706,7 @@ namespace FacialPhoto
         }
         private void btnCropInitLeft_Click(object sender, EventArgs e)
         {
+            btnCropLeft.Enabled = true;
 
             startSelection = true;
         }
@@ -696,7 +714,7 @@ namespace FacialPhoto
         private void btnCropInitRight_Click(object sender, EventArgs e)
         {
             startSelectionRight = true;
-
+            btnCropLeft.Enabled = true;
         }
 
         private void btnCropLeft_Click(object sender, EventArgs e)
@@ -808,7 +826,7 @@ namespace FacialPhoto
             return angleDeg;
         }
 
-        double calculateAngle(Circle [] circleArray)
+        double calculateAngle(Circle[] circleArray)
         {
             double P2X = 0.0, P2Y = 0.0, P1X = 0.0, P1Y = 0.0, P3X = 0.0, P3Y = 0.0;
 
@@ -855,7 +873,29 @@ namespace FacialPhoto
             return angleDeg;
         }
 
+        private static double Distance(Point pt1, Point pt2,int mmValue)
+        {
+            var temp1 = Math.Pow((pt1.X - pt2.X), 2);
+            var temp2 = Math.Pow((pt1.Y - pt2.Y), 2);
+            var result = Math.Sqrt(temp1 + temp2);
 
+
+            return (mmValue / result);
+
+            
+        }
+
+        private static double Distance(Point pt1, Point pt2)
+        {
+            var temp1 = Math.Pow((pt1.X - pt2.X), 2);
+            var temp2 = Math.Pow((pt1.Y - pt2.Y), 2);
+            var result = Math.Sqrt(temp1 + temp2);
+
+
+            return (result);
+
+
+        }
 
 
     }
@@ -897,7 +937,7 @@ class Circle : UserControl
 
     }
 
-  
+
 
 
 }
