@@ -151,6 +151,7 @@ namespace FacialPhoto
         private void picBoxRight_MouseDown(object sender, MouseEventArgs e)
         {
             if (endingR) endingR = false;
+
             if (drawingLineR)
             {
 
@@ -164,8 +165,10 @@ namespace FacialPhoto
                 Form1.mmtoPixelRatioR = Distance(lineR._startLoc, lineR._endLoc, Convert.ToInt32(content));
                 Console.WriteLine("right distance ratio" + mmtoPixelRatioR);
 
-                lineR._text = content;
+                //lineR._text = content;
                 //lineR.drawText();
+
+                picBoxRight.Refresh();
 
                 drawingLineR = false;
                 drawingR = false;
@@ -208,12 +211,12 @@ namespace FacialPhoto
         private void picBoxRight_MouseMove(object sender, MouseEventArgs e)
         {
             base.OnMouseMove(e);
-
+           
             if (drawingLineR)
             {
 
 
-                Refresh();
+                picBoxRight.Refresh();
                 lineR._endLoc = e.Location;
                 lineR.drawMe();
 
@@ -223,16 +226,16 @@ namespace FacialPhoto
             {
                 if (item != null && item._selected)
                 {
-                    Refresh();
+                    picBoxRight.Refresh();
 
                     item._location = new Point(e.X, e.Y);
-                    if (String.Equals(item._text, "Go'L"))
+                    if (String.Equals(item._text, "Go'L")) //Find a circle thats label saved as this and save that location
                     {
 
                         golCircleR = item._location;
 
                     }
-                    if (String.Equals(item._text, "GoR"))
+                    if (String.Equals(item._text, "GoR"))//Find a circle thats label saved as this and save that location
                     {
 
                         gorCircleR = item._location;
@@ -380,7 +383,7 @@ namespace FacialPhoto
                 Form1.mmtoPixelRatio =  Distance(line._startLoc,line._endLoc,Convert.ToInt32(content));
                 Console.WriteLine("left distance ratio"+mmtoPixelRatio);
                 //line.drawText();
-
+                picBoxLeft.Refresh();
                 drawingLine = false;
                 drawing = false;
                 ending = true;
@@ -670,7 +673,7 @@ namespace FacialPhoto
             {
 
 
-                Refresh();
+                picBoxLeft.Refresh();
                 line._endLoc = e.Location;
                 line.drawMe();
 
@@ -680,7 +683,7 @@ namespace FacialPhoto
             {
                 if (item != null && item._selected)
                 {
-                    Refresh();
+                    picBoxLeft.Refresh();
 
                     item._location = new Point(e.X, e.Y);
 

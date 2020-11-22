@@ -195,6 +195,7 @@
             this.btnDraw.TabIndex = 5;
             this.btnDraw.Text = "Draw Line";
             this.btnDraw.UseVisualStyleBackColor = false;
+            this.btnDraw.Visible = false;
             this.btnDraw.Click += new System.EventHandler(this.btnDraw_Click);
             // 
             // btnLeftPrint
