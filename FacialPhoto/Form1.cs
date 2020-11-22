@@ -85,32 +85,51 @@ namespace FacialPhoto
         bool drawing = false, drawingLine = false, ending = false; //left picbox drawing line
         bool drawingR = false, drawingLineR = false, endingR = false; //right picbox drawing line
 
-        Circle[] circleArray = new Circle[35]; //left picbox drawn circles array
-        Point[] locationArray = new Point[35];
+        Circle[] circleArray = new Circle[36]; //left picbox drawn circles array
+        Point[] locationArray = new Point[36];
 
 
-        Circle[] circleArrayR = new Circle[35]; //right picbox drawn circles array
-        Point[] locationArrayR = new Point[35];
+        Circle[] circleArrayR = new Circle[36]; //right picbox drawn circles array
+        Point[] locationArrayR = new Point[36];
 
         Line line; //left picbox drawn line
         Line lineR;//right pic box drawn line
 
         //list of the names of the points
 
-        List<String> names = new List<string>()
+        //List<String> names = new List<string>()
+
+        //{
+        //    "V'","Tr","Eu'","G'","Op'","Ft","Na'","Ps","Ex","En","Pi","Or'","Rh'","Zy'","Tr","Prn",
+        //    "C'","Al","Ac","Sn","Spl","Ls","Sts","St","Ch","Sti","Li","Sbl","Pog'","Gn'","Me'","Go'","C",
+        //    "GO'L","GO'R"
+
+
+        //};
+
+
+        List<String> namesR = new List<string>() //name list for the Right image points
 
         {
-            "V'","Tr'","Eu'","G'","Op'","Ft","Na'","Ps","Ex","En","Pi","Or'","Rh'","Zy'","Tr","Prn",
-            "C'","Al","Ac","Sn","Spl","Ls","Sts","St","Ch","Sti","Li","Sbl","Pog'","Gn'","Me'","Go'","C",
-            "GO'L","GO'R"
+            "V'","Tr","Eu'R","Eu'L","FtR","Ft'L","G'","ExR","PsR","PiR","EnR","N'","Rh'","EnL","PsL","PiL",
+            "ExL","ZyR","OrR","Prn","AIR","AI","Or'L","Zy'L","SpI","Ls","CHR",
+            "Sti","Sts","Li","SbI","ChL","Go'L","GoR","Pog'","Me'"
 
+
+        };
+        List<String> names = new List<string>() //name list for the left image points
+
+        {
+            "V'","Tr","Op'","Tr'","Op'","Go'","G'","Ex","Or'","Ac","Ch","Me'","G'","N'","Rh'","Prn",
+            "C'","Sn","Ls","Li","Sbl","Pog'","Gn'"
+           
 
         };
         double angleLeft = 0.0;
         double angleRight = 0.0;
 
-        Point golCircle, gorCircle;
-        Point golCircleR, gorCircleR;
+        Point golCircle, gorCircle;  //both points are measured for distance,in left image
+        Point golCircleR, gorCircleR;//both points are measured for distance,in right image
 
         private void picBoxLeft_MouseUp(object sender, MouseEventArgs e)
         {
@@ -207,13 +226,13 @@ namespace FacialPhoto
                     Refresh();
 
                     item._location = new Point(e.X, e.Y);
-                    if (String.Equals(item._text, "GO'L"))
+                    if (String.Equals(item._text, "Go'L"))
                     {
 
                         golCircleR = item._location;
 
                     }
-                    if (String.Equals(item._text, "GO'R"))
+                    if (String.Equals(item._text, "GoR"))
                     {
 
                         gorCircleR = item._location;
@@ -304,14 +323,14 @@ namespace FacialPhoto
 
 
 
-            for (int i = 0; i < names.Count; i++)
+            for (int i = 0; i < namesR.Count; i++)
             {
 
 
                 countX += 50;
                 if (countX > picBoxLeft.Width - 50) { countX = 10; countY += 100; }
 
-                circleArrayR[i] = new Circle(new Point(countX, countY), picBoxRight, Color.Red, 15, i, names[i]);
+                circleArrayR[i] = new Circle(new Point(countX, countY), picBoxRight, Color.Red, 15, i, namesR[i]);
 
             }
 
@@ -411,7 +430,9 @@ namespace FacialPhoto
             answer = Math.Round(answer, 2, MidpointRounding.ToEven);
             angleLeft = answer;
 
-            lblLeftAngle.Text = "Angle:" + answer + "\u00B0";
+            Console.WriteLine("Left Angle:" + answer);
+
+            //lblLeftAngle.Text = "Angle:" + answer + "\u00B0";
         }
 
         private void btnRightCalculate_Click(object sender, EventArgs e)
@@ -449,7 +470,8 @@ namespace FacialPhoto
             double answer = calculateAngle(p1X, p1Y, p2X, p2Y, p3X, p3Y);
             answer = Math.Round(answer, 2, MidpointRounding.ToEven);
 
-            lblRightAngle.Text = "Angle:" + answer + "\u00B0";
+            Console.WriteLine("Right Angle:" + answer);
+            //lblRightAngle.Text = "Angle:" + answer + "\u00B0";
         }
 
         private void btnLeftPrint_Click(object sender, EventArgs e)
@@ -560,7 +582,7 @@ namespace FacialPhoto
             LineSeparator ls = new LineSeparator(new SolidLine()).SetMarginBottom(10); ;
             Paragraph subheader = new Paragraph("Answers")
                 .SetTextAlignment(TextAlignment.LEFT)
-                .SetFontSize(15).SetMarginBottom(20);
+                .SetFontSize(15).SetMarginBottom(10);
 
 
 
@@ -571,10 +593,10 @@ namespace FacialPhoto
             Paragraph answerSupport = new Paragraph("Degree of undereye support :-" + Form1.answerSupport)
                .SetTextAlignment(TextAlignment.LEFT)
                .SetFontSize(10);
-           
 
-            
-            Paragraph distancePara = new Paragraph("Distance(Side)" + Math.Round(distanceInMm / 10,2,MidpointRounding.ToEven) + "cm" + "                    Distance(Frontal)" + Math.Round(distanceInMmR/10,2,MidpointRounding.ToEven) + "cm")
+
+            //"Distance(Side)" + Math.Round(distanceInMm / 10,2,MidpointRounding.ToEven) + "cm" + "                    
+            Paragraph distancePara = new Paragraph("Distance(Frontal)" + Math.Round(distanceInMmR/10,2,MidpointRounding.ToEven) + "cm")
               .SetTextAlignment(TextAlignment.LEFT)
               .SetFontSize(10);
 
@@ -600,9 +622,9 @@ namespace FacialPhoto
                .SetTextAlignment(TextAlignment.LEFT)
                .SetFontSize(10).SetMarginBottom(10);
 
-            Paragraph angleParaRight = new Paragraph("Angle(Front):" + angleRight + "\u00B0")
-               .SetTextAlignment(TextAlignment.LEFT)
-               .SetFontSize(10).SetMarginBottom(10);
+            //Paragraph angleParaRight = new Paragraph("Angle(Front):" + angleRight + "\u00B0")
+            //   .SetTextAlignment(TextAlignment.LEFT)
+            //   .SetFontSize(10).SetMarginBottom(10);
 
             document.Add(header);
             document.Add(ls);
@@ -613,7 +635,7 @@ namespace FacialPhoto
             document.Add(distancePara);
             document.Add(anglePara);
             document.Add(angleParaLeft);
-            document.Add(angleParaRight);
+            //document.Add(angleParaRight);
             //document.Add(img);
             //document.Add(imgR);
             document.Close();
@@ -629,7 +651,8 @@ namespace FacialPhoto
             double answer = calculateAngle(circleArrayR);
             answer = Math.Round(answer, 2, MidpointRounding.ToEven);
             angleRight = answer;
-            lblRightAngle.Text = "Angle:" + answer + "\u00B0";
+            Console.WriteLine("Right Angle:" + answer);
+            //lblRightAngle.Text = "Angle:" + answer + "\u00B0";
         }
 
         private void Form1_MouseEnter(object sender, EventArgs e)
@@ -661,13 +684,13 @@ namespace FacialPhoto
 
                     item._location = new Point(e.X, e.Y);
 
-                    if (String.Equals(item._text, "GO'L") )
+                    if (String.Equals(item._text, "GoR") )
                     {
 
                         golCircle = item._location;    
                             
                     }
-                    if (String.Equals(item._text, "GO'R"))
+                    if (String.Equals(item._text, "Go'L"))
                     {
 
                         gorCircle = item._location;

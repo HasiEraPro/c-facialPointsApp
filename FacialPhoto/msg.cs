@@ -53,7 +53,7 @@ namespace FacialPhoto
 
         private void cboxDOA_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (assym != "" ) btnPrint.Enabled = true;
+            if (!btnPrint.Enabled) btnPrint.Enabled = true;
             
             switch (cboxDOA.SelectedIndex)
             {

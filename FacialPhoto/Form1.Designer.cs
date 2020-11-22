@@ -40,8 +40,6 @@
             this.btnLoadPoints = new System.Windows.Forms.Button();
             this.btnDraw = new System.Windows.Forms.Button();
             this.btnLeftPrint = new System.Windows.Forms.Button();
-            this.lblLeftAngle = new System.Windows.Forms.Label();
-            this.btnLeftcalculate = new System.Windows.Forms.Button();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnBrowseRight = new System.Windows.Forms.Button();
             this.btnCropRight = new System.Windows.Forms.Button();
@@ -49,8 +47,6 @@
             this.btnRightReset = new System.Windows.Forms.Button();
             this.btnRightLoad = new System.Windows.Forms.Button();
             this.btnRightDraw = new System.Windows.Forms.Button();
-            this.lblRightAngle = new System.Windows.Forms.Label();
-            this.btnRightCalculate = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxRight)).BeginInit();
@@ -120,8 +116,6 @@
             this.flowLayoutPanel1.Controls.Add(this.btnLoadPoints);
             this.flowLayoutPanel1.Controls.Add(this.btnDraw);
             this.flowLayoutPanel1.Controls.Add(this.btnLeftPrint);
-            this.flowLayoutPanel1.Controls.Add(this.lblLeftAngle);
-            this.flowLayoutPanel1.Controls.Add(this.btnLeftcalculate);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -215,29 +209,6 @@
             this.btnLeftPrint.UseVisualStyleBackColor = false;
             this.btnLeftPrint.Click += new System.EventHandler(this.btnLeftPrint_Click);
             // 
-            // lblLeftAngle
-            // 
-            this.lblLeftAngle.AutoSize = true;
-            this.lblLeftAngle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLeftAngle.Location = new System.Drawing.Point(345, 40);
-            this.lblLeftAngle.Name = "lblLeftAngle";
-            this.lblLeftAngle.Size = new System.Drawing.Size(65, 24);
-            this.lblLeftAngle.TabIndex = 7;
-            this.lblLeftAngle.Text = "Angle:";
-            this.lblLeftAngle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // btnLeftcalculate
-            // 
-            this.btnLeftcalculate.BackColor = System.Drawing.Color.Aquamarine;
-            this.btnLeftcalculate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLeftcalculate.Location = new System.Drawing.Point(416, 43);
-            this.btnLeftcalculate.Name = "btnLeftcalculate";
-            this.btnLeftcalculate.Size = new System.Drawing.Size(175, 35);
-            this.btnLeftcalculate.TabIndex = 8;
-            this.btnLeftcalculate.Text = "Calculate Angle";
-            this.btnLeftcalculate.UseVisualStyleBackColor = false;
-            this.btnLeftcalculate.Click += new System.EventHandler(this.btnLeftcalculate_Click);
-            // 
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
@@ -248,8 +219,6 @@
             this.flowLayoutPanel2.Controls.Add(this.btnRightReset);
             this.flowLayoutPanel2.Controls.Add(this.btnRightLoad);
             this.flowLayoutPanel2.Controls.Add(this.btnRightDraw);
-            this.flowLayoutPanel2.Controls.Add(this.lblRightAngle);
-            this.flowLayoutPanel2.Controls.Add(this.btnRightCalculate);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(611, 3);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
@@ -329,28 +298,6 @@
             this.btnRightDraw.UseVisualStyleBackColor = false;
             this.btnRightDraw.Click += new System.EventHandler(this.btnRightDraw_Click);
             // 
-            // lblRightAngle
-            // 
-            this.lblRightAngle.AutoSize = true;
-            this.lblRightAngle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRightAngle.Location = new System.Drawing.Point(130, 40);
-            this.lblRightAngle.Name = "lblRightAngle";
-            this.lblRightAngle.Size = new System.Drawing.Size(69, 25);
-            this.lblRightAngle.TabIndex = 7;
-            this.lblRightAngle.Text = "Angle:";
-            // 
-            // btnRightCalculate
-            // 
-            this.btnRightCalculate.BackColor = System.Drawing.Color.Aquamarine;
-            this.btnRightCalculate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRightCalculate.Location = new System.Drawing.Point(205, 43);
-            this.btnRightCalculate.Name = "btnRightCalculate";
-            this.btnRightCalculate.Size = new System.Drawing.Size(225, 31);
-            this.btnRightCalculate.TabIndex = 8;
-            this.btnRightCalculate.Text = "Calculate Angle";
-            this.btnRightCalculate.UseVisualStyleBackColor = false;
-            this.btnRightCalculate.Click += new System.EventHandler(this.btnRightCalculate_Click_1);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -368,9 +315,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picBoxLeft)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxRight)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
             this.flowLayoutPanel2.ResumeLayout(false);
-            this.flowLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -395,11 +340,7 @@
         private System.Windows.Forms.Button btnRightReset;
         private System.Windows.Forms.Button btnRightLoad;
         private System.Windows.Forms.Button btnRightDraw;
-        private System.Windows.Forms.Label lblLeftAngle;
-        private System.Windows.Forms.Label lblRightAngle;
         private System.Windows.Forms.PictureBox picBoxLeft;
-        private System.Windows.Forms.Button btnLeftcalculate;
-        private System.Windows.Forms.Button btnRightCalculate;
     }
 }
 

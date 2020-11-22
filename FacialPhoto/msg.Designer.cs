@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cboxDOA = new System.Windows.Forms.ComboBox();
             this.lblError = new System.Windows.Forms.Label();
             this.btnPrint = new System.Windows.Forms.Button();
-            this.cboxDOA = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,29 +49,15 @@
             this.panel1.Size = new System.Drawing.Size(599, 225);
             this.panel1.TabIndex = 0;
             // 
-            // lblError
+            // label1
             // 
-            this.lblError.AutoSize = true;
-            this.lblError.BackColor = System.Drawing.Color.Transparent;
-            this.lblError.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblError.ForeColor = System.Drawing.Color.Red;
-            this.lblError.Location = new System.Drawing.Point(172, 200);
-            this.lblError.Name = "lblError";
-            this.lblError.Size = new System.Drawing.Size(0, 25);
-            this.lblError.TabIndex = 6;
-            // 
-            // btnPrint
-            // 
-            this.btnPrint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnPrint.FlatAppearance.BorderSize = 0;
-            this.btnPrint.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrint.Location = new System.Drawing.Point(177, 183);
-            this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(200, 39);
-            this.btnPrint.TabIndex = 4;
-            this.btnPrint.Text = "Next";
-            this.btnPrint.UseVisualStyleBackColor = false;
-            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(26, 34);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(197, 25);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Degree of asymmetry";
             // 
             // cboxDOA
             // 
@@ -87,15 +73,29 @@
             this.cboxDOA.TabIndex = 1;
             this.cboxDOA.SelectedIndexChanged += new System.EventHandler(this.cboxDOA_SelectedIndexChanged);
             // 
-            // label1
+            // lblError
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(26, 34);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(197, 25);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Degree of asymmetry";
+            this.lblError.AutoSize = true;
+            this.lblError.BackColor = System.Drawing.Color.Transparent;
+            this.lblError.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblError.ForeColor = System.Drawing.Color.Red;
+            this.lblError.Location = new System.Drawing.Point(172, 200);
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new System.Drawing.Size(0, 20);
+            this.lblError.TabIndex = 6;
+            // 
+            // btnPrint
+            // 
+            this.btnPrint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnPrint.FlatAppearance.BorderSize = 0;
+            this.btnPrint.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPrint.Location = new System.Drawing.Point(186, 155);
+            this.btnPrint.Name = "btnPrint";
+            this.btnPrint.Size = new System.Drawing.Size(200, 39);
+            this.btnPrint.TabIndex = 4;
+            this.btnPrint.Text = "Next";
+            this.btnPrint.UseVisualStyleBackColor = false;
+            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
             // msg
             // 
