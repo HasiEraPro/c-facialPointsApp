@@ -19,7 +19,7 @@ namespace FacialPhoto.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -63,6 +63,16 @@ namespace FacialPhoto.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap beautiful_woman_clean_face_side_view_portrait_45036638 {
+            get {
+                object obj = ResourceManager.GetObject("beautiful-woman-clean-face-side-view-portrait-45036638", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap exampleFront {
             get {
                 object obj = ResourceManager.GetObject("exampleFront", resourceCulture);
@@ -76,6 +86,36 @@ namespace FacialPhoto.Properties {
         internal static System.Drawing.Bitmap exampleSide {
             get {
                 object obj = ResourceManager.GetObject("exampleSide", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap KitFront {
+            get {
+                object obj = ResourceManager.GetObject("KitFront", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap KitSide {
+            get {
+                object obj = ResourceManager.GetObject("KitSide", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap madsside {
+            get {
+                object obj = ResourceManager.GetObject("madsside", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.picBoxLeft = new System.Windows.Forms.PictureBox();
             this.picBoxRight = new System.Windows.Forms.PictureBox();
@@ -39,7 +38,7 @@
             this.btnUndo = new System.Windows.Forms.Button();
             this.btnLoadPoints = new System.Windows.Forms.Button();
             this.btnDraw = new System.Windows.Forms.Button();
-            this.btnLeftPrint = new System.Windows.Forms.Button();
+            this.btnProcess = new System.Windows.Forms.Button();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnBrowseRight = new System.Windows.Forms.Button();
             this.btnCropRight = new System.Windows.Forms.Button();
@@ -72,18 +71,18 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.2807F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 87.7193F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1216, 610);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1283, 682);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // picBoxLeft
             // 
             this.picBoxLeft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBoxLeft.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picBoxLeft.Image = global::FacialPhoto.Properties.Resources.exampleSide;
-            this.picBoxLeft.Location = new System.Drawing.Point(3, 77);
+            this.picBoxLeft.Image = global::FacialPhoto.Properties.Resources.beautiful_woman_clean_face_side_view_portrait_45036638;
+            this.picBoxLeft.Location = new System.Drawing.Point(3, 86);
             this.picBoxLeft.Name = "picBoxLeft";
-            this.picBoxLeft.Size = new System.Drawing.Size(602, 530);
-            this.picBoxLeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picBoxLeft.Size = new System.Drawing.Size(635, 593);
+            this.picBoxLeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picBoxLeft.TabIndex = 0;
             this.picBoxLeft.TabStop = false;
             this.picBoxLeft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picBoxLeft_MouseDown);
@@ -94,11 +93,11 @@
             // 
             this.picBoxRight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBoxRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picBoxRight.Image = ((System.Drawing.Image)(resources.GetObject("picBoxRight.Image")));
-            this.picBoxRight.Location = new System.Drawing.Point(611, 77);
+            this.picBoxRight.Image = global::FacialPhoto.Properties.Resources.KitFront;
+            this.picBoxRight.Location = new System.Drawing.Point(644, 86);
             this.picBoxRight.Name = "picBoxRight";
-            this.picBoxRight.Size = new System.Drawing.Size(602, 530);
-            this.picBoxRight.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picBoxRight.Size = new System.Drawing.Size(636, 593);
+            this.picBoxRight.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picBoxRight.TabIndex = 1;
             this.picBoxRight.TabStop = false;
             this.picBoxRight.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picBoxRight_MouseDown);
@@ -115,11 +114,11 @@
             this.flowLayoutPanel1.Controls.Add(this.btnUndo);
             this.flowLayoutPanel1.Controls.Add(this.btnLoadPoints);
             this.flowLayoutPanel1.Controls.Add(this.btnDraw);
-            this.flowLayoutPanel1.Controls.Add(this.btnLeftPrint);
+            this.flowLayoutPanel1.Controls.Add(this.btnProcess);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(602, 68);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(635, 77);
             this.flowLayoutPanel1.TabIndex = 2;
             // 
             // btnBrowseLeft
@@ -195,20 +194,19 @@
             this.btnDraw.TabIndex = 5;
             this.btnDraw.Text = "Draw Line";
             this.btnDraw.UseVisualStyleBackColor = false;
-            this.btnDraw.Visible = false;
-            this.btnDraw.Click += new System.EventHandler(this.btnDraw_Click);
+            this.btnDraw.Click += new System.EventHandler(this.btnDrawLeft_Click);
             // 
-            // btnLeftPrint
+            // btnProcess
             // 
-            this.btnLeftPrint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.btnLeftPrint.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLeftPrint.Location = new System.Drawing.Point(165, 43);
-            this.btnLeftPrint.Name = "btnLeftPrint";
-            this.btnLeftPrint.Size = new System.Drawing.Size(174, 35);
-            this.btnLeftPrint.TabIndex = 6;
-            this.btnLeftPrint.Text = "Process";
-            this.btnLeftPrint.UseVisualStyleBackColor = false;
-            this.btnLeftPrint.Click += new System.EventHandler(this.btnLeftPrint_Click);
+            this.btnProcess.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.btnProcess.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnProcess.Location = new System.Drawing.Point(165, 43);
+            this.btnProcess.Name = "btnProcess";
+            this.btnProcess.Size = new System.Drawing.Size(174, 35);
+            this.btnProcess.TabIndex = 6;
+            this.btnProcess.Text = "Process";
+            this.btnProcess.UseVisualStyleBackColor = false;
+            this.btnProcess.Click += new System.EventHandler(this.btnProcess_Click);
             // 
             // flowLayoutPanel2
             // 
@@ -221,9 +219,9 @@
             this.flowLayoutPanel2.Controls.Add(this.btnRightLoad);
             this.flowLayoutPanel2.Controls.Add(this.btnRightDraw);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(611, 3);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(644, 3);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(602, 68);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(636, 77);
             this.flowLayoutPanel2.TabIndex = 3;
             // 
             // btnBrowseRight
@@ -304,13 +302,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.ClientSize = new System.Drawing.Size(1216, 610);
+            this.ClientSize = new System.Drawing.Size(1283, 682);
             this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Facial  Tag  App";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.MouseEnter += new System.EventHandler(this.Form1_MouseEnter);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picBoxLeft)).EndInit();
@@ -337,7 +336,7 @@
         private System.Windows.Forms.Button btnUndo;
         private System.Windows.Forms.Button btnLoadPoints;
         private System.Windows.Forms.Button btnDraw;
-        private System.Windows.Forms.Button btnLeftPrint;
+        private System.Windows.Forms.Button btnProcess;
         private System.Windows.Forms.Button btnRightReset;
         private System.Windows.Forms.Button btnRightLoad;
         private System.Windows.Forms.Button btnRightDraw;
