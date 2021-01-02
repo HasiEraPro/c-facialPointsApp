@@ -12,7 +12,7 @@ using System.Windows.Forms;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using DrawingImage = System.Drawing.Image;
-
+using Kaliko.ImageLibrary.Scaling;
 using PdfImage = iText.Layout.Element.Image;
 using iText.Layout.Properties;
 using iText.Layout.Element;
@@ -444,7 +444,7 @@ namespace FacialPhoto
             picBoxRight.DrawToBitmap(bmp2, picBoxRight.ClientRectangle);
             Bitmap crpImg = new Bitmap(rectRW, rectRH);
 
-            Bitmap bmp3 = fillPicBox(picBoxRight); // create a bitmap using picbox measurements colored 
+           // Bitmap bmp3 = fillPicBox(picBoxRight); // create a bitmap using picbox measurements colored 
 
             for (int i = 0; i < rectRW; i++)
             {
@@ -455,21 +455,26 @@ namespace FacialPhoto
                 }
             }
             //copy the pixels from the croped one to the bmp3 we created 
-            for (int i = 0; i < rectRW; i++) 
-            {
-                for (int y = 0; y < rectRH; y++)
-                {
-                    Color pxlclr = crpImg.GetPixel(i, y);
-                    bmp3.SetPixel(xRDown + i, yRDown + y, pxlclr);
-                }
-            }
+            //for (int i = 0; i < rectRW; i++) 
+           // {
+              //  for (int y = 0; y < rectRH; y++)
+              //  {
+               ///     Color pxlclr = crpImg.GetPixel(i, y);
+               //     bmp3.SetPixel(xRDown + i, yRDown + y, pxlclr);
+              //  }
+           // }
 
+            Bitmap sbitMap = ScaleImage(crpImg, picBoxRight.Width, picBoxRight.Height);
+            Bitmap bmp3 = fillPicBox(picBoxRight);
+            Graphics g = Graphics.FromImage(bmp3);
+            g.DrawImage(sbitMap, new PointF((picBoxRight.Width - sbitMap.Width) / 2, (picBoxRight.Height - sbitMap.Height) / 2));
             //load that image into the picbox,this image will clear the location difference between image and picbox
             picBoxRight.Image = (DrawingImage)bmp3;
             picBoxRight.SizeMode = PictureBoxSizeMode.Zoom;
 
             picBoxRight.Refresh();//remove the selection rectangle
 
+            btnCropRight.Enabled = false;
             // picBoxRight.Image = FixedSize(picBoxRight.Image, FRAMEWIDTH, FRAMEHEIGHT);
             // picBoxRight.SizeMode = PictureBoxSizeMode.Zoom;
             // picBoxRight.Refresh();
@@ -1069,7 +1074,7 @@ namespace FacialPhoto
            picBoxLeft.DrawToBitmap(bmp2, picBoxLeft.ClientRectangle);
             Bitmap crpImg = new Bitmap(rectW, rectH);
 
-            Bitmap bmp3 = fillPicBox(picBoxLeft);
+            
 
             for (int i = 0; i < rectW; i++)
             {
@@ -1080,21 +1085,27 @@ namespace FacialPhoto
                 }
             }
 
-            for (int i = 0; i < rectW; i++)
-            {
-                for (int y = 0; y < rectH; y++)
-                {
-                    Color pxlclr = crpImg.GetPixel(i, y);
-                    bmp3.SetPixel(xDown + i, yDown + y, pxlclr);
-                }
-            }
 
+
+
+
+            // for (int i = 0; i < rectW; i++)
+            // {
+            //   for (int y = 0; y < rectH; y++)
+            //  {
+            //    Color pxlclr = crpImg.GetPixel(i, y);
+            //     bmp3.SetPixel(xDown + i, yDown + y, pxlclr);
+            ///  }
+            //   }
+            Bitmap sbitMap = ScaleImage(crpImg, picBoxLeft.Width, picBoxLeft.Height);
+            Bitmap bmp3 = fillPicBox(picBoxLeft);
+             Graphics g = Graphics.FromImage(bmp3);
+             g.DrawImage(sbitMap, new PointF((picBoxLeft.Width - sbitMap.Width)/2,(picBoxLeft.Height - sbitMap.Height)/2));
 
             picBoxLeft.Image = (DrawingImage)bmp3;
             picBoxLeft.SizeMode = PictureBoxSizeMode.Zoom;
-
             picBoxLeft.Refresh();//remove the selection rectangle
-
+            btnCropLeft.Enabled = false;
             //picBoxLeft.Image = FixedSize(picBoxLeft.Image, FRAMEWIDTH, FRAMEHEIGHT);
             //picBoxLeft.SizeMode = PictureBoxSizeMode.Zoom;
             // picBoxLeft.Refresh();
@@ -1333,7 +1344,22 @@ namespace FacialPhoto
 
 
         }
+        public static Bitmap ScaleImage(Bitmap bmp, int maxWidth, int maxHeight)
+        {
+            var ratioX = (double)maxWidth / bmp.Width;
+            var ratioY = (double)maxHeight / bmp.Height;
+            var ratio = Math.Min(ratioX, ratioY);
 
+            var newWidth = (int)(bmp.Width * ratio);
+            var newHeight = (int)(bmp.Height * ratio);
+
+            var newImage = new Bitmap(newWidth, newHeight);
+
+            using (var graphics = Graphics.FromImage(newImage))
+                graphics.DrawImage(bmp, 0, 0, newWidth, newHeight);
+
+            return newImage;
+        }
     }
 }
 
